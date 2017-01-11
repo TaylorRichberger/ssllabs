@@ -28,7 +28,7 @@ def parsegrade(string):
 
 def gradecheck():
     locale.setlocale(locale.LC_ALL, '')
-    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered')
+    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered.  Returns 0 for a passing grade, and 1 for a failing grade.')
     parser.add_argument('-V', '--version', action='version', version=__version__)
     parser.add_argument('-g', '--grade', help='The minimum acceptable grade (default %(default)s)', type=parsegrade, default='A+')
     parser.add_argument('-T', '--ignoretrust', help='If this is set, Trust will be ignored and the trust-ignored grade will be used', action='store_true')
