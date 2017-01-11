@@ -28,6 +28,7 @@ setup(
     install_requires=[
         'six',
         'requests',
+        'enum34',
         ],
     classifiers=[
         'Intended Audience :: Developers',
