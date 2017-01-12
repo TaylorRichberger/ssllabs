@@ -11,7 +11,7 @@ by SSL Labs or Qualys.
 
 # Documentation
 The best place to access the documentation is the [GitHub Pages generated
-documentation](https://github.com/Taywee/ssllabs), or by generating the
+documentation](https://taywee.github.io/ssllabs/), or by generating the
 documentation yourself.
 
 # License
