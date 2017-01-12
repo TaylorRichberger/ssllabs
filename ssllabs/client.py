@@ -69,16 +69,29 @@ class Client(object):
         '''A generator that iteratively calls analyze on a host until it is done or errored.
         
         Does not return the host structure, but sets it to the object for
-        recalling with the host property.  When you run this, you must iterate
-        it to completion before trying to access the host property.  You can do
-        this with a loop like::
+        recalling with the :meth:`host` property.  When you run this, you must
+        iterate it to completion before trying to access the host property.
+        You can do this with a loop like::
 
             for data in client.analyze("https://example.com"):
                 time.sleep(10)
 
         It is done this way to enable the user to construct their own
         asynchronous setups if they wish, without enforcing a specific
-        framework or language version.
+        framework or language version.  For instance, a proper async coroutine
+        for python 3.5 could be constructed to do this something like this::
+            
+            from ssllabs.client import Client
+            import asyncio
+
+            async def analyze(hostname):
+                client = Client()
+                for data in client.analyze(hostname):
+                    await asyncio.sleep(10)
+                return client.host
+
+        This will let you check multiple endpoints at once, or run the analysis
+        while doing other work.
 
         :raises ssllabs.errors.ResponseError: subclass if an error was encountered with a known code
         :raises requests.HTTPError: if an error was encountered that isn't a known code, the raw error is returned
