@@ -6,9 +6,9 @@
 # No warranty, explicit or implicit, provided.
 
 __author__ = 'Taylor C. Richberger <tcr@absolute-performance.com>'
-__description__ = 'A simple grade tester for qualys ssllabs, which just uses a return status to communicate results'
+__description__ = 'A module for testing SSL sites through Qualys SSL Labs'
 __email__ = 'tcr@absolute-performance.com'
 __license__ = 'MIT'
 __modulename__ = 'ssllabs'
-__version__ = '0.0.2'
+__version__ = '0.1.0'
 __website__ = 'https://github.com/Taywee/ssllabs'

@@ -8,6 +8,7 @@ from __future__ import division, absolute_import, print_function, unicode_litera
 import argparse
 import locale
 import six
+from time import sleep
 import sys
 from datetime import timedelta, datetime
 
@@ -29,7 +30,7 @@ def parsegrade(string):
 
 def gradecheck():
     locale.setlocale(locale.LC_ALL, '')
-    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered.  Returns 0 for a passing grade, and 1 for a failing grade.')
+    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered.  Exits 0 for a passing grade, and 1 for a failing grade.')
     parser.add_argument('-V', '--version', action='version', version=__version__)
     parser.add_argument('-g', '--grade', help='The minimum acceptable grade (default %(default)s)', type=parsegrade, default='A+')
     parser.add_argument('-T', '--ignoretrust', help='If this is set, Trust will be ignored and the trust-ignored grade will be used', action='store_true')
@@ -46,13 +47,15 @@ def gradecheck():
     expiretime = None
 
     c = Client()
-    data = c.analyze(args.host)
+    for data in c.analyze(args.host):
+        sleep(10)
+    data = c.host
 
-    getgrade = lambda endpoint: parsegrade(endpoint['gradeTrustIgnored'] if args.ignoretrust else endpoint['grade'])
+    getgrade = lambda endpoint: parsegrade(endpoint.gradeTrustIgnored if args.ignoretrust else endpoint.grade)
 
-    for endpoint in data['endpoints']:
+    for endpoint in data.endpoints:
         endpointgrade = getgrade(endpoint)
-        endpointexpiretime = datetime.utcfromtimestamp(endpoint['details']['cert']['notAfter'] / 1000)
+        endpointexpiretime = endpoint.details.cert.notAfter
         if grade is None or grade < endpointgrade:
             grade = endpointgrade
         if expiretime is None or expiretime > endpointexpiretime:
