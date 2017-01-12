@@ -30,7 +30,7 @@ def parsegrade(string):
 
 def gradecheck():
     locale.setlocale(locale.LC_ALL, '')
-    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered.  Exits 0 for a passing grade, and 1 for a failing grade.')
+    parser = argparse.ArgumentParser(description='Do a grade check of a server.  For multi-endpoint setups, the worst grade of the cluster will be considered.  Exits 0 for a passing grade, and 1 for a failing grade.  By using this tool, you are bound by the SSL Labs terms of use: https://www.ssllabs.com/about/terms.html.  This program sends data through the SSL Labs remote servers.')
     parser.add_argument('-V', '--version', action='version', version=__version__)
     parser.add_argument('-g', '--grade', help='The minimum acceptable grade (default %(default)s)', type=parsegrade, default='A+')
     parser.add_argument('-T', '--ignoretrust', help='If this is set, Trust will be ignored and the trust-ignored grade will be used', action='store_true')
@@ -47,6 +47,13 @@ def gradecheck():
     expiretime = None
 
     c = Client()
+
+    if not args.quiet:
+        messagelist = '\n'.join(c.info().messages)
+        if messagelist:
+            print(messagelist)
+            print()
+
     for data in c.analyze(args.host):
         sleep(10)
     data = c.host
