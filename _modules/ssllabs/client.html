@@ -107,7 +107,7 @@
         <span class="sd">&#39;&#39;&#39;Calls the info API endpoint.</span>
 <span class="sd">        </span>
 <span class="sd">        :returns: the info data</span>
-<span class="sd">        :rtype: Info</span>
+<span class="sd">        :rtype: ssllabs.info.Info</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">))</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
@@ -130,7 +130,7 @@
 <span class="sd">        asynchronous setups if they wish, without enforcing a specific</span>
 <span class="sd">        framework or language version.</span>
 
-<span class="sd">        :raises ssllabs.errors.*: if an error was encountered with a known code</span>
+<span class="sd">        :raises ssllabs.errors.ResponseError: subclass if an error was encountered with a known code</span>
 <span class="sd">        :raises requests.HTTPError: if an error was encountered that isn&#39;t a known code, the raw error is returned</span>
 <span class="sd">        :param str host: The host to test</span>
 <span class="sd">        :param bool publish: Whether to publish the results on the Qualys SSL Labs site</span>
@@ -172,9 +172,9 @@
     <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Gets the host data.</span>
 
-<span class="sd">        :raises NoHostError: if a full call to analyze hasn&#39;t been completed</span>
+<span class="sd">        :raises ssllabs.errors.NoHostError: if a full call to analyze hasn&#39;t been completed</span>
 <span class="sd">        :returns: The host object</span>
-<span class="sd">        :rtype: Host</span>
+<span class="sd">        :rtype: ssllabs.host.Host</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

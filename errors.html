@@ -56,6 +56,74 @@
             
   <div class="section" id="module-ssllabs.errors">
 <span id="ssllabs-errors"></span><h1>ssllabs.errors<a class="headerlink" href="#module-ssllabs.errors" title="Permalink to this headline">¶</a></h1>
+<p>These are some general purpose errors, including errors generated for status
+codes.  See <a class="reference external" href="https://github.com/ssllabs/ssllabs-scan/blob/stable/ssllabs-api-docs.md#error-response-status-codes">the API page for more information</a>.</p>
+<dl class="exception">
+<dt id="ssllabs.errors.ClientError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">ClientError</code><a class="reference internal" href="_modules/ssllabs/errors.html#ClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.ClientError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ResponseError" title="ssllabs.errors.ResponseError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ResponseError</span></code></a></p>
+<p>The mid-level response error indicating a 400-range error.  This is
+never constructed directy</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.InternalError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">InternalError</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/errors.html#InternalError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.InternalError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ServerError" title="ssllabs.errors.ServerError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ServerError</span></code></a></p>
+<p>internal error</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.InvocationError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">InvocationError</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/errors.html#InvocationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.InvocationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ClientError" title="ssllabs.errors.ClientError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ClientError</span></code></a></p>
+<p>invocation error (e.g., invalid parameters)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.NoHostError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">NoHostError</code><a class="reference internal" href="_modules/ssllabs/errors.html#NoHostError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.NoHostError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">RuntimeError</span></code></p>
+<p>An error indicating that no host had been set when
+<a class="reference internal" href="client.html#ssllabs.client.Client.host" title="ssllabs.client.Client.host"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.host()</span></code></a> was called.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.RequestRate">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">RequestRate</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/errors.html#RequestRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.RequestRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ClientError" title="ssllabs.errors.ClientError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ClientError</span></code></a></p>
+<p>client request rate too high or too many new assessments too fast</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.ResponseError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">ResponseError</code><a class="reference internal" href="_modules/ssllabs/errors.html#ResponseError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.ResponseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">RuntimeError</span></code></p>
+<p>The top-level response error.  This is never constructed directly</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.ServerError">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">ServerError</code><a class="reference internal" href="_modules/ssllabs/errors.html#ServerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.ServerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ResponseError" title="ssllabs.errors.ResponseError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ResponseError</span></code></a></p>
+<p>The mid-level response error indicating a 500-range error.  This is
+never constructed directy</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.ServiceNotAvailable">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">ServiceNotAvailable</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/errors.html#ServiceNotAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.ServiceNotAvailable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ServerError" title="ssllabs.errors.ServerError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ServerError</span></code></a></p>
+<p>the service is not available (e.g., down for maintenance)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ssllabs.errors.ServiceOverloaded">
+<em class="property">exception </em><code class="descclassname">ssllabs.errors.</code><code class="descname">ServiceOverloaded</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/errors.html#ServiceOverloaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.errors.ServiceOverloaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ssllabs.errors.ServerError" title="ssllabs.errors.ServerError"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.errors.ServerError</span></code></a></p>
+<p>the service is overloaded</p>
+</dd></dl>
+
 </div>
 
 

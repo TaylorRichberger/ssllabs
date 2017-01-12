@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.errors &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ssllabs.errors</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright © 2016 Taylor C. Richberger &lt;taywee@gmx.com&gt;</span>
+<span class="c1"># This code is released under the license described in the LICENSE file</span>
+
+<span class="sd">&#39;&#39;&#39;These are some general purpose errors, including errors generated for status</span>
+<span class="sd">codes.  See `the API page for more information</span>
+<span class="sd">&lt;https://github.com/ssllabs/ssllabs-scan/blob/stable/ssllabs-api-docs.md#error-response-status-codes&gt;`__.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="NoHostError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.NoHostError">[docs]</a><span class="k">class</span> <span class="nc">NoHostError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;An error indicating that no host had been set when</span>
+<span class="sd">    :meth:`ssllabs.client.Client.host` was called.&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ResponseError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.ResponseError">[docs]</a><span class="k">class</span> <span class="nc">ResponseError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;The top-level response error.  This is never constructed directly&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.ClientError">[docs]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="n">ResponseError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;The mid-level response error indicating a 400-range error.  This is</span>
+<span class="sd">    never constructed directy&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="ServerError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.ServerError">[docs]</a><span class="k">class</span> <span class="nc">ServerError</span><span class="p">(</span><span class="n">ResponseError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;The mid-level response error indicating a 500-range error.  This is</span>
+<span class="sd">    never constructed directy&#39;&#39;&#39;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="InvocationError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.InvocationError">[docs]</a><span class="k">class</span> <span class="nc">InvocationError</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;invocation error (e.g., invalid parameters)&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InvocationError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;Invoked with invalid parameters. This is a library bug; please report it: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reason</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="RequestRate"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.RequestRate">[docs]</a><span class="k">class</span> <span class="nc">RequestRate</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;client request rate too high or too many new assessments too fast&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RequestRate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;Request rate is too high.  Please slow down: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reason</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="InternalError"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.InternalError">[docs]</a><span class="k">class</span> <span class="nc">InternalError</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;internal error&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">InternalError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;Internal server error encountered.  Wait and try again: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reason</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ServiceNotAvailable"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.ServiceNotAvailable">[docs]</a><span class="k">class</span> <span class="nc">ServiceNotAvailable</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;the service is not available (e.g., down for maintenance)&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ServiceNotAvailable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;Service not available.  May be down for maintenance.  Wait and try again: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reason</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ServiceOverloaded"><a class="viewcode-back" href="../../errors.html#ssllabs.errors.ServiceOverloaded">[docs]</a><span class="k">class</span> <span class="nc">ServiceOverloaded</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;the service is overloaded&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ServiceOverloaded</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s1">&#39;Service overloaded.  Wait and try again: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reason</span><span class="p">))</span></div>
+
+<span class="n">codes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">400</span><span class="p">:</span> <span class="n">InvocationError</span><span class="p">,</span>
+    <span class="mi">429</span><span class="p">:</span> <span class="n">RequestRate</span><span class="p">,</span>
+    <span class="mi">500</span><span class="p">:</span> <span class="n">InternalError</span><span class="p">,</span>
+    <span class="mi">503</span><span class="p">:</span> <span class="n">ServiceNotAvailable</span><span class="p">,</span>
+    <span class="mi">529</span><span class="p">:</span> <span class="n">ServiceOverloaded</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

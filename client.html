@@ -59,7 +59,8 @@
 <dl class="class">
 <dt id="ssllabs.client.Client">
 <em class="property">class </em><code class="descclassname">ssllabs.client.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>entrypoint='https://api.ssllabs.com/api/v2'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/client.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.client.Client" title="Permalink to this definition">¶</a></dt>
-<dd><p>The main entry point of this module, used to run analysis and get data</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The main entry point of this module, used to run analysis and get data</p>
 <dl class="method">
 <dt id="ssllabs.client.Client.analyze">
 <code class="descname">analyze</code><span class="sig-paren">(</span><em>host</em>, <em>publish=False</em>, <em>ignoreMismatch=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/client.html#Client.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.client.Client.analyze" title="Permalink to this definition">¶</a></dt>
@@ -80,7 +81,7 @@ framework or language version.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
-<li><strong>ssllabs.errors.*</strong> &#8211; if an error was encountered with a known code</li>
+<li><a class="reference internal" href="errors.html#ssllabs.errors.ResponseError" title="ssllabs.errors.ResponseError"><strong>ssllabs.errors.ResponseError</strong></a> &#8211; subclass if an error was encountered with a known code</li>
 <li><strong>requests.HTTPError</strong> &#8211; if an error was encountered that isn&#8217;t a known code, the raw error is returned</li>
 </ul>
 </td>
@@ -124,11 +125,11 @@ are identical to absent ones).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>NoHostError</strong> &#8211; if a full call to analyze hasn&#8217;t been completed</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference internal" href="errors.html#ssllabs.errors.NoHostError" title="ssllabs.errors.NoHostError"><strong>ssllabs.errors.NoHostError</strong></a> &#8211; if a full call to analyze hasn&#8217;t been completed</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The host object</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Host</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="host.html#ssllabs.host.Host" title="ssllabs.host.Host">ssllabs.host.Host</a></td>
 </tr>
 </tbody>
 </table>
@@ -144,7 +145,7 @@ are identical to absent ones).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the info data</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">Info</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="info.html#ssllabs.info.Info" title="ssllabs.info.Info">ssllabs.info.Info</a></td>
 </tr>
 </tbody>
 </table>

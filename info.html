@@ -56,6 +56,54 @@
             
   <div class="section" id="module-ssllabs.info">
 <span id="ssllabs-info"></span><h1>ssllabs.info<a class="headerlink" href="#module-ssllabs.info" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.info.Info">
+<em class="property">class </em><code class="descclassname">ssllabs.info.</code><code class="descname">Info</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/info.html#Info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.info.Info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
+<p>The info object, accessed through <a class="reference internal" href="client.html#ssllabs.client.Client.info" title="ssllabs.client.Client.info"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.info()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.info.Info.criteriaVersion">
+<code class="descname">criteriaVersion</code><a class="headerlink" href="#ssllabs.info.Info.criteriaVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>rating criteria version as a string (e.g., &#8220;2009f&#8221;)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.info.Info.currentAssessments">
+<code class="descname">currentAssessments</code><a class="headerlink" href="#ssllabs.info.Info.currentAssessments" title="Permalink to this definition">¶</a></dt>
+<dd><p>the number of ongoing assessments submitted by this client.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.info.Info.maxAssessments">
+<code class="descname">maxAssessments</code><a class="headerlink" href="#ssllabs.info.Info.maxAssessments" title="Permalink to this definition">¶</a></dt>
+<dd><p>the maximum number of concurrent assessments the client is allowed
+to initiate.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.info.Info.messages">
+<code class="descname">messages</code><a class="headerlink" href="#ssllabs.info.Info.messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of messages (strings). Messages can be public (sent to
+everyone) and private (sent only to the invoking client). Private
+messages are prefixed with &#8220;[Private]&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.info.Info.newAssessmentCoolOff">
+<code class="descname">newAssessmentCoolOff</code><a class="headerlink" href="#ssllabs.info.Info.newAssessmentCoolOff" title="Permalink to this definition">¶</a></dt>
+<dd><p>the cool-off period after each new assessment, as a timedelta;
+you&#8217;re not allowed to submit a new assessment before the cool-off
+expires, otherwise you&#8217;ll get a 429.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.info.Info.version">
+<code class="descname">version</code><a class="headerlink" href="#ssllabs.info.Info.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>SSL Labs software version as a string (e.g., &#8220;1.11.14&#8221;)</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

@@ -62,7 +62,8 @@
 <span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
 
 <div class="viewcode-block" id="EndpointDetails"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.EndpointDetails">[docs]</a><span class="k">class</span> <span class="nc">EndpointDetails</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Detailed information about an endpoint&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;Detailed information about an endpoint, accessed from</span>
+<span class="sd">    :meth:`ssllabs.endpoint.Endpoint.details`&#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hostStartTime&#39;</span><span class="p">])</span>

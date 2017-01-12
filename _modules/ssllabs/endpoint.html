@@ -61,7 +61,7 @@
 <span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
 
 <div class="viewcode-block" id="Endpoint"><a class="viewcode-back" href="../../endpoint.html#ssllabs.endpoint.Endpoint">[docs]</a><span class="k">class</span> <span class="nc">Endpoint</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Object representing a single endpoint&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;Object representing a single endpoint, accessed from :meth:`ssllabs.host.Host.endpoints`&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__ipAddress</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ipAddress&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__serverName</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;serverName&#39;</span><span class="p">)</span>

@@ -56,6 +56,102 @@
             
   <div class="section" id="module-ssllabs.host">
 <span id="ssllabs-host"></span><h1>ssllabs.host<a class="headerlink" href="#module-ssllabs.host" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.host.Host">
+<em class="property">class </em><code class="descclassname">ssllabs.host.</code><code class="descname">Host</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/host.html#Host"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.host.Host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
+<p>A host object.  The class filled by
+<a class="reference internal" href="client.html#ssllabs.client.Client.analyze" title="ssllabs.client.Client.analyze"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.analyze()</span></code></a> and accessed through
+<a class="reference internal" href="client.html#ssllabs.client.Client.host" title="ssllabs.client.Client.host"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.host()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.host.Host.cacheExpiryTime">
+<code class="descname">cacheExpiryTime</code><a class="headerlink" href="#ssllabs.host.Host.cacheExpiryTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>when will the assessment results expire from the cache (typically
+set only for assessment with errors; otherwise the results stay in the
+cache for as long as there&#8217;s sufficient room)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.certHostnames">
+<code class="descname">certHostnames</code><a class="headerlink" href="#ssllabs.host.Host.certHostnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>the list of certificate hostnames collected from the
+certificates seen during assessment. The hostnames may not be
+valid. This field is available only if the server certificate
+doesn&#8217;t match the requested hostname. In that case, this field
+saves you some time as you don&#8217;t have to inspect the certificates
+yourself to find out what valid hostnames might be.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.criteriaVersion">
+<code class="descname">criteriaVersion</code><a class="headerlink" href="#ssllabs.host.Host.criteriaVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>grading criteria version (e.g., &#8220;2009&#8221;)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.endpoints">
+<code class="descname">endpoints</code><a class="headerlink" href="#ssllabs.host.Host.endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of Endpoint objects</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.engineVersion">
+<code class="descname">engineVersion</code><a class="headerlink" href="#ssllabs.host.Host.engineVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment engine version (e.g., &#8220;1.0.120&#8221;)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.host">
+<code class="descname">host</code><a class="headerlink" href="#ssllabs.host.Host.host" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment host, which can be a hostname or an IP address</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.isPublic">
+<code class="descname">isPublic</code><a class="headerlink" href="#ssllabs.host.Host.isPublic" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if this assessment is publicly available (listed on the SSL
+Labs assessment boards)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.port">
+<code class="descname">port</code><a class="headerlink" href="#ssllabs.host.Host.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment port (e.g., 443)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.protocol">
+<code class="descname">protocol</code><a class="headerlink" href="#ssllabs.host.Host.protocol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.startTime">
+<code class="descname">startTime</code><a class="headerlink" href="#ssllabs.host.Host.startTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment starting time, as a utc datetime object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.status">
+<code class="descname">status</code><a class="headerlink" href="#ssllabs.host.Host.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment status; possible values: DNS, ERROR, IN_PROGRESS, and
+READY.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.statusMessage">
+<code class="descname">statusMessage</code><a class="headerlink" href="#ssllabs.host.Host.statusMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>status message in English. When status is ERROR, this field will
+contain an error message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.host.Host.testTime">
+<code class="descname">testTime</code><a class="headerlink" href="#ssllabs.host.Host.testTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment completion time, as a utc datetime object</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
