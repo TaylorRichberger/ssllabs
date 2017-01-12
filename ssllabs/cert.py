@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from ssllabs.object import Object
 
 class Cert(Object):
+    '''Cert object that can be used to access the certificate of an endpoint'''
     def __init__(self, data):
         self.__subject = data.get('subject')
         self.__commonNames = data.get('commonNames')
@@ -64,8 +65,8 @@ class Cert(Object):
         return self.__issuerLabel
     @property
     def revocationInfo(self):
-        '''RevocitonInfo object representing revocation information present in
-        the certificate'''
+        ''':class:`RevocationInfo` object representing revocation information
+        present in the certificate'''
         return self.__revocationInfo
     @property
     def crlURIs(self):
@@ -94,7 +95,7 @@ class Cert(Object):
         return self.__ocspRevocationStatus
     @property
     def sgc(self):
-        '''Server Gated Cryptography support as an SGC object'''
+        '''Server Gated Cryptography support as an :class:`SGC` object'''
         return self.__sgc
     @property
     def validationType(self):
@@ -103,7 +104,7 @@ class Cert(Object):
         return self.__validationType
     @property
     def issues(self):
-        '''list of certificate issues as an Issues object'''
+        '''list of certificate issues as an :class:`Issues` object'''
         return self.__issues
     @property
     def sct(self):
@@ -118,28 +119,35 @@ class Cert(Object):
         return self.__mustStaple
 
 class RevocationInfo(object):
+    '''revocation information present in the certificate'''
     def __init__(self, data):
         self.__crl = bool(1 & data)
         self.__ocsp = bool(2 & data)
     @property
     def crl(self):
+        '''CRL information available'''
         return self.__crl
     @property
     def ocsp(self):
+        '''OCSP information available'''
         return self.__ocsp
 
 class SGC(object):
+    '''Server Gated Cryptography support'''
     def __init__(self, data):
         self.__netscape = bool(1 & data)
         self.__microsoft = bool(2 & data)
     @property
     def netscape(self):
+        '''Netscape SGC'''
         return self.__netscape
     @property
     def microsoft(self):
+        '''Microsoft SGC'''
         return self.__microsoft
 
 class Issues(object):
+    '''Issues that may be present'''
     def __init__(self, data):
         self.__nochainoftrust = bool(1 & data)
         self.__notbefore = bool(2 & data)
@@ -153,36 +161,45 @@ class Issues(object):
 
     @property
     def nochainoftrust(self):
+        '''No Chain of Trust'''
         return self.__nochainoftrust
 
     @property
     def notbefore(self):
+        '''Violates Not Before constraint'''
         return self.__notbefore
 
     @property
     def notafter(self):
+        '''Violates Not After constraint'''
         return self.__notafter
 
     @property
     def hostnamemismatch(self):
+        '''Hostnames mismatched'''
         return self.__hostnamemismatch
 
     @property
     def revoked(self):
+        '''Certificate revoked'''
         return self.__revoked
 
     @property
     def badcommonname(self):
+        '''Bad Common Name'''
         return self.__badcommonname
 
     @property
     def selfsigned(self):
+        '''Self-signed certificate'''
         return self.__selfsigned
 
     @property
     def blacklisted(self):
+        '''Certificate blacklisted'''
         return self.__blacklisted
 
     @property
     def insecuresignature(self):
+        '''Insecure Signature'''
         return self.__insecuresignature

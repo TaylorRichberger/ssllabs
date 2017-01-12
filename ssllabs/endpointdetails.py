@@ -12,6 +12,8 @@ from ssllabs.cert import Cert
 from ssllabs.object import Object
 
 class EndpointDetails(Object):
+    '''Detailed information about an endpoint'''
+
     def __init__(self, data):
         self.__hostStartTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['hostStartTime'])
         self.__key = data.get('key')
@@ -76,7 +78,7 @@ class EndpointDetails(Object):
         return self.__key
     @property
     def cert(self):
-        '''certificate information'''
+        '''certificate information as a :class:`ssllabs.cert.Cert`'''
         return self.__cert
     @property
     def chain(self):
@@ -153,7 +155,8 @@ class EndpointDetails(Object):
         return self.__ocspStapling
     @property
     def staplingRevocationStatus(self):
-        '''same as Cert.revocationStatus, but for the stapled OCSP response.'''
+        '''same as :meth:`ssllabs.cert.Cert.revocationStatus`, but for the
+        stapled OCSP response.'''
         return self.__staplingRevocationStatus
     @property
     def staplingRevocationErrorMessage(self):

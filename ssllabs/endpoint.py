@@ -11,6 +11,7 @@ from ssllabs.endpointdetails import EndpointDetails
 from ssllabs.object import Object
 
 class Endpoint(Object):
+    '''Object representing a single endpoint'''
     def __init__(self, data):
         self.__ipAddress = data.get('ipAddress')
         self.__serverName = data.get('serverName')
@@ -91,5 +92,5 @@ class Endpoint(Object):
         return self.__delegation
     @property
     def details(self):
-        '''this field contains an EndpointDetails object.'''
+        '''this field contains a :class:`ssllabs.endpointdetails.EndpointDetails` object.'''
         return self.__details
