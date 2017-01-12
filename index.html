@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to ssllabs’s documentation! &#8212; ssllabs 0.1.1 documentation</title>
+    <title>ssllabs python module &#8212; ssllabs 0.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1',
+        VERSION:     '0.1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="cert.html" title="ssllabs.cert"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">ssllabs 0.1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -50,13 +50,28 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-ssllabs-s-documentation">
-<h1>Welcome to ssllabs&#8217;s documentation!<a class="headerlink" href="#welcome-to-ssllabs-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="ssllabs-python-module">
+<h1>ssllabs python module<a class="headerlink" href="#ssllabs-python-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-this">
+<h2>What is this?<a class="headerlink" href="#what-is-this" title="Permalink to this headline">¶</a></h2>
+<p>Python module for easy working with the Qualys SSL Labs API. Should be fully
+compatible with Python 2 and 3.  Depends on requests and six.</p>
+<p>This API works through the remote SSL Labs servers, and information that you
+pass through this API will in turn be passed to the SSL Labs servers.</p>
 <p>The best place to start is probably at <a class="reference internal" href="client.html#ssllabs.client.Client" title="ssllabs.client.Client"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.client.Client</span></code></a>.  That&#8217;s
 the main interface you should be using to run the API, possibly catching errors
 from <a class="reference internal" href="errors.html#module-ssllabs.errors" title="ssllabs.errors"><code class="xref py py-mod docutils literal"><span class="pre">ssllabs.errors</span></code></a>.</p>
+<p>The sources are available in the <a class="reference external" href="https://github.com/Taywee/ssllabs">GitHub Repository</a>, and releases can be downloaded in the
+<a class="reference external" href="https://github.com/Taywee/ssllabs/releases">releases tab</a></p>
+</div>
+<div class="section" id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h2>
+<p>I am not affiliated with SSL Labs or Qualys, and this project is not supported
+by SSL Labs or Qualys.</p>
+</div>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cert.html">ssllabs.cert</a></li>
 <li class="toctree-l1"><a class="reference internal" href="client.html">ssllabs.client</a></li>
@@ -70,12 +85,19 @@ from <a class="reference internal" href="errors.html#module-ssllabs.errors" titl
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>This module is released under the MIT license, With the additional restrictions
+as specified in the <a class="reference external" href="https://www.ssllabs.com/about/terms.html">SSL Labs terms of use</a>.  If you use this module, as a
+user of the SSL Labs API, you will also be bound by those restrictions.</p>
+</div>
 </div>
 
 
@@ -86,8 +108,14 @@ from <a class="reference internal" href="errors.html#module-ssllabs.errors" titl
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to ssllabs&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#">ssllabs python module</a><ul>
+<li><a class="reference internal" href="#what-is-this">What is this?</a></li>
+<li><a class="reference internal" href="#disclaimer">Disclaimer</a></li>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
 </ul>
 
   <h4>Next topic</h4>
@@ -126,7 +154,7 @@ from <a class="reference internal" href="errors.html#module-ssllabs.errors" titl
         <li class="right" >
           <a href="cert.html" title="ssllabs.cert"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">ssllabs 0.1.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
