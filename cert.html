@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.cert &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ssllabs.client" href="client.html" />
+    <link rel="prev" title="Welcome to ssllabs’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to ssllabs’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ssllabs.cert">
+<span id="ssllabs-cert"></span><h1>ssllabs.cert<a class="headerlink" href="#module-ssllabs.cert" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.cert.Cert">
+<em class="property">class </em><code class="descclassname">ssllabs.cert.</code><code class="descname">Cert</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/cert.html#Cert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.cert.Cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cert object that can be used to access the certificate of an endpoint</p>
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.altNames">
+<code class="descname">altNames</code><a class="headerlink" href="#ssllabs.cert.Cert.altNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>alternative names</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.commonNames">
+<code class="descname">commonNames</code><a class="headerlink" href="#ssllabs.cert.Cert.commonNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>common names extracted from the subject</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.crlRevocationStatus">
+<code class="descname">crlRevocationStatus</code><a class="headerlink" href="#ssllabs.cert.Cert.crlRevocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as revocationStatus, but only for the CRL information (if
+any).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.crlURIs">
+<code class="descname">crlURIs</code><a class="headerlink" href="#ssllabs.cert.Cert.crlURIs" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRL URIs extracted from the certificate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.issuerLabel">
+<code class="descname">issuerLabel</code><a class="headerlink" href="#ssllabs.cert.Cert.issuerLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>issuer name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.issuerSubject">
+<code class="descname">issuerSubject</code><a class="headerlink" href="#ssllabs.cert.Cert.issuerSubject" title="Permalink to this definition">¶</a></dt>
+<dd><p>issuer subject</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.issues">
+<code class="descname">issues</code><a class="headerlink" href="#ssllabs.cert.Cert.issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of certificate issues as an <a class="reference internal" href="#ssllabs.cert.Issues" title="ssllabs.cert.Issues"><code class="xref py py-class docutils literal"><span class="pre">Issues</span></code></a> object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.mustStaple">
+<code class="descname">mustStaple</code><a class="headerlink" href="#ssllabs.cert.Cert.mustStaple" title="Permalink to this definition">¶</a></dt>
+<dd><p>a number that describes the must staple feature extension status: 0
+- not supported 1 - Supported, but OCSP response is not stapled 2 -
+Supported, OCSP response is stapled</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.notAfter">
+<code class="descname">notAfter</code><a class="headerlink" href="#ssllabs.cert.Cert.notAfter" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp after which the certificate is not valid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.notBefore">
+<code class="descname">notBefore</code><a class="headerlink" href="#ssllabs.cert.Cert.notBefore" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp before which the certificate is not valid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.ocspRevocationStatus">
+<code class="descname">ocspRevocationStatus</code><a class="headerlink" href="#ssllabs.cert.Cert.ocspRevocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as revocationStatus, but only for the OCSP information (if
+any).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.ocspURIs">
+<code class="descname">ocspURIs</code><a class="headerlink" href="#ssllabs.cert.Cert.ocspURIs" title="Permalink to this definition">¶</a></dt>
+<dd><p>OCSP URIs extracted from the certificate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.revocationInfo">
+<code class="descname">revocationInfo</code><a class="headerlink" href="#ssllabs.cert.Cert.revocationInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#ssllabs.cert.RevocationInfo" title="ssllabs.cert.RevocationInfo"><code class="xref py py-class docutils literal"><span class="pre">RevocationInfo</span></code></a> object representing revocation information
+present in the certificate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.revocationStatus">
+<code class="descname">revocationStatus</code><a class="headerlink" href="#ssllabs.cert.Cert.revocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>a number that describes the revocation status of the certificate: 0
+- not checked 1 - certificate revoked 2 - certificate not revoked 3 -
+revocation check error 4 - no revocation information 5 - internal
+error</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.sct">
+<code class="descname">sct</code><a class="headerlink" href="#ssllabs.cert.Cert.sct" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the certificate contains an embedded SCT; false
+otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.sgc">
+<code class="descname">sgc</code><a class="headerlink" href="#ssllabs.cert.Cert.sgc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server Gated Cryptography support as an <a class="reference internal" href="#ssllabs.cert.SGC" title="ssllabs.cert.SGC"><code class="xref py py-class docutils literal"><span class="pre">SGC</span></code></a> object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.sigAlg">
+<code class="descname">sigAlg</code><a class="headerlink" href="#ssllabs.cert.Cert.sigAlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate signature algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.subject">
+<code class="descname">subject</code><a class="headerlink" href="#ssllabs.cert.Cert.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate subject</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Cert.validationType">
+<code class="descname">validationType</code><a class="headerlink" href="#ssllabs.cert.Cert.validationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>E for Extended Validation certificates; may be null if unable to
+determine</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.cert.Issues">
+<em class="property">class </em><code class="descclassname">ssllabs.cert.</code><code class="descname">Issues</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/cert.html#Issues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.cert.Issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issues that may be present</p>
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.badcommonname">
+<code class="descname">badcommonname</code><a class="headerlink" href="#ssllabs.cert.Issues.badcommonname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bad Common Name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.blacklisted">
+<code class="descname">blacklisted</code><a class="headerlink" href="#ssllabs.cert.Issues.blacklisted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Certificate blacklisted</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.hostnamemismatch">
+<code class="descname">hostnamemismatch</code><a class="headerlink" href="#ssllabs.cert.Issues.hostnamemismatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hostnames mismatched</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.insecuresignature">
+<code class="descname">insecuresignature</code><a class="headerlink" href="#ssllabs.cert.Issues.insecuresignature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insecure Signature</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.nochainoftrust">
+<code class="descname">nochainoftrust</code><a class="headerlink" href="#ssllabs.cert.Issues.nochainoftrust" title="Permalink to this definition">¶</a></dt>
+<dd><p>No Chain of Trust</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.notafter">
+<code class="descname">notafter</code><a class="headerlink" href="#ssllabs.cert.Issues.notafter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Violates Not After constraint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.notbefore">
+<code class="descname">notbefore</code><a class="headerlink" href="#ssllabs.cert.Issues.notbefore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Violates Not Before constraint</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.revoked">
+<code class="descname">revoked</code><a class="headerlink" href="#ssllabs.cert.Issues.revoked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Certificate revoked</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.Issues.selfsigned">
+<code class="descname">selfsigned</code><a class="headerlink" href="#ssllabs.cert.Issues.selfsigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Self-signed certificate</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.cert.RevocationInfo">
+<em class="property">class </em><code class="descclassname">ssllabs.cert.</code><code class="descname">RevocationInfo</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/cert.html#RevocationInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.cert.RevocationInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>revocation information present in the certificate</p>
+<dl class="attribute">
+<dt id="ssllabs.cert.RevocationInfo.crl">
+<code class="descname">crl</code><a class="headerlink" href="#ssllabs.cert.RevocationInfo.crl" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRL information available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.RevocationInfo.ocsp">
+<code class="descname">ocsp</code><a class="headerlink" href="#ssllabs.cert.RevocationInfo.ocsp" title="Permalink to this definition">¶</a></dt>
+<dd><p>OCSP information available</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.cert.SGC">
+<em class="property">class </em><code class="descclassname">ssllabs.cert.</code><code class="descname">SGC</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/cert.html#SGC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.cert.SGC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server Gated Cryptography support</p>
+<dl class="attribute">
+<dt id="ssllabs.cert.SGC.microsoft">
+<code class="descname">microsoft</code><a class="headerlink" href="#ssllabs.cert.SGC.microsoft" title="Permalink to this definition">¶</a></dt>
+<dd><p>Microsoft SGC</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.cert.SGC.netscape">
+<code class="descname">netscape</code><a class="headerlink" href="#ssllabs.cert.SGC.netscape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Netscape SGC</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to ssllabs&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="client.html"
+                        title="next chapter">ssllabs.client</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/cert.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to ssllabs’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

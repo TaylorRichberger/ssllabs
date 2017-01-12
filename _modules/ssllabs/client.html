@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.client &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ssllabs.client</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright © 2016 Taylor C. Richberger &lt;taywee@gmx.com&gt;</span>
+<span class="c1"># This code is released under the license described in the LICENSE file</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">six.moves.urllib.parse</span> <span class="k">import</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">urlencode</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">ssllabs</span> <span class="k">import</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">ssllabs.host</span> <span class="k">import</span> <span class="n">Host</span>
+<span class="kn">from</span> <span class="nn">ssllabs.info</span> <span class="k">import</span> <span class="n">Info</span>
+
+<div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;The main entry point of this module, used to run analysis and get data&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entrypoint</span><span class="o">=</span><span class="s1">&#39;https://api.ssllabs.com/api/v2&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;initializes the client object.</span>
+
+<span class="sd">        :param str entrypoint: The entrypoint URL for the API; usually shouldn&#39;t be changed</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entrypoint</span> <span class="o">=</span> <span class="n">entrypoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__host</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">entrypoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Returns the entrypoint URL.</span>
+
+<span class="sd">        Because the URL is disassembled on setting and reassembled on getting,</span>
+<span class="sd">        the URL may not match the exact string as set, but will semantically</span>
+<span class="sd">        match as the same URL (for instance, an empty query string and fragment</span>
+<span class="sd">        are identical to absent ones).</span>
+
+<span class="sd">        :returns: the entrypoint as set with the entrypoint property or __init__</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+
+    <span class="nd">@entrypoint</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">entrypoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Sets the entrypoint URL.</span>
+
+<span class="sd">        Because this calls urlsplit, an invalid URL will raise whatever</span>
+<span class="sd">        exceptions it would when fed directly into urlsplit.</span>
+
+<span class="sd">        :param str value: The URL to set</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">scheme</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">netloc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__path</span> <span class="o">=</span> <span class="n">parts</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Client.info"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Calls the info API endpoint.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: the info data</span>
+<span class="sd">        :rtype: Info</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">))</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Info</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Client.analyze"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">publish</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignoreMismatch</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;A generator that iteratively calls analyze on a host until it is done or errored.</span>
+<span class="sd">        </span>
+<span class="sd">        Does not return the host structure, but sets it to the object for</span>
+<span class="sd">        recalling with the host property.  When you run this, you must iterate</span>
+<span class="sd">        it to completion before trying to access the host property.  You can do</span>
+<span class="sd">        this with a loop like::</span>
+
+<span class="sd">            for data in client.analyze(&quot;https://example.com&quot;):</span>
+<span class="sd">                time.sleep(10)</span>
+
+<span class="sd">        It is done this way to enable the user to construct their own</span>
+<span class="sd">        asynchronous setups if they wish, without enforcing a specific</span>
+<span class="sd">        framework or language version.</span>
+
+<span class="sd">        :raises ssllabs.errors.*: if an error was encountered with a known code</span>
+<span class="sd">        :raises requests.HTTPError: if an error was encountered that isn&#39;t a known code, the raw error is returned</span>
+<span class="sd">        :param str host: The host to test</span>
+<span class="sd">        :param bool publish: Whether to publish the results on the Qualys SSL Labs site</span>
+<span class="sd">        :param bool ignoreMismatch: Proceed with assessments even when the server certificate doesn&#39;t match the assessment hostname</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">,</span> <span class="s1">&#39;analyze&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Start the run</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span> <span class="s1">&#39;done&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">publish</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s1">&#39;publish&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;on&#39;</span>
+
+        <span class="k">if</span> <span class="n">ignoreMismatch</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s1">&#39;ignoreMismatch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;on&#39;</span>
+
+        <span class="n">startnewquery</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;startNew&#39;</span><span class="p">:</span> <span class="s1">&#39;on&#39;</span><span class="p">}</span>
+        <span class="n">startnewquery</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">startnewquery</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+            <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">query</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="k">while</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;IN_PROGRESS&#39;</span><span class="p">,</span> <span class="s1">&#39;DNS&#39;</span><span class="p">}:</span>
+                <span class="k">yield</span> <span class="n">data</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="n">request</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__host</span> <span class="o">=</span> <span class="n">Host</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">in</span> <span class="n">errors</span><span class="o">.</span><span class="n">codes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">codes</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">](</span><span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Gets the host data.</span>
+
+<span class="sd">        :raises NoHostError: if a full call to analyze hasn&#39;t been completed</span>
+<span class="sd">        :returns: The host object</span>
+<span class="sd">        :rtype: Host</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">NoHostError</span><span class="p">(</span><span class="s1">&#39;analyze must be run to completion before the host property may be accessed&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__host</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

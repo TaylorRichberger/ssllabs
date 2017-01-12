@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.endpoint &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ssllabs.endpointdetails" href="endpointdetails.html" />
+    <link rel="prev" title="ssllabs.client" href="client.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="endpointdetails.html" title="ssllabs.endpointdetails"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ssllabs.endpoint">
+<span id="ssllabs-endpoint"></span><h1>ssllabs.endpoint<a class="headerlink" href="#module-ssllabs.endpoint" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.endpoint.Endpoint">
+<em class="property">class </em><code class="descclassname">ssllabs.endpoint.</code><code class="descname">Endpoint</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpoint.html#Endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpoint.Endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object representing a single endpoint</p>
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.delegation">
+<code class="descname">delegation</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.delegation" title="Permalink to this definition">¶</a></dt>
+<dd><p>indicates domain name delegation with and without the www prefix bit
+0 (1) - set for non-prefixed access bit 1 (2) - set for prefixed
+access</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.details">
+<code class="descname">details</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.details" title="Permalink to this definition">¶</a></dt>
+<dd><p>this field contains a <a class="reference internal" href="endpointdetails.html#ssllabs.endpointdetails.EndpointDetails" title="ssllabs.endpointdetails.EndpointDetails"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.endpointdetails.EndpointDetails</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.duration">
+<code class="descname">duration</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment duration, as a timedelta</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.eta">
+<code class="descname">eta</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.eta" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimated time, as a timedelta, until the completion of the
+assessment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.grade">
+<code class="descname">grade</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.grade" title="Permalink to this definition">¶</a></dt>
+<dd><p>possible values: A+, A-, A-F, T (no trust) and M (certificate name
+mismatch)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.gradeTrustIgnored">
+<code class="descname">gradeTrustIgnored</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.gradeTrustIgnored" title="Permalink to this definition">¶</a></dt>
+<dd><p>grade (as above), if trust issues are ignored</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.hasWarnings">
+<code class="descname">hasWarnings</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.hasWarnings" title="Permalink to this definition">¶</a></dt>
+<dd><p>if this endpoint has warnings that might affect the score (e.g., get
+A- instead of A).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.ipAddress">
+<code class="descname">ipAddress</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.ipAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>endpoint IP address, in IPv4 or IPv6 format.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.isExceptional">
+<code class="descname">isExceptional</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.isExceptional" title="Permalink to this definition">¶</a></dt>
+<dd><p>this flag will be raised when an exceptional configuration is
+encountered. The SSL Labs test will give such sites an A+.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.progress">
+<code class="descname">progress</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.progress" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment progress, which is a value from 0 to 100, and -1 if the
+assessment has not yet started</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.serverName">
+<code class="descname">serverName</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.serverName" title="Permalink to this definition">¶</a></dt>
+<dd><p>server name retrieved via reverse DNS</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.statusDetails">
+<code class="descname">statusDetails</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.statusDetails" title="Permalink to this definition">¶</a></dt>
+<dd><p>code of the operation currently in progress</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.statusDetailsMessage">
+<code class="descname">statusDetailsMessage</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.statusDetailsMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>description of the operation currently in progress</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpoint.Endpoint.statusMessage">
+<code class="descname">statusMessage</code><a class="headerlink" href="#ssllabs.endpoint.Endpoint.statusMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>assessment status message; this field will contain &#8220;Ready&#8221; if the
+endpoint assessment was successful.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="client.html"
+                        title="previous chapter">ssllabs.client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="endpointdetails.html"
+                        title="next chapter">ssllabs.endpointdetails</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/endpoint.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="endpointdetails.html" title="ssllabs.endpointdetails"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

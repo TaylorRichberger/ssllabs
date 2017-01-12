@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.cert &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ssllabs.cert</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright © 2016 Taylor C. Richberger &lt;taywee@gmx.com&gt;</span>
+<span class="c1"># This code is released under the license described in the LICENSE file</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
+
+<div class="viewcode-block" id="Cert"><a class="viewcode-back" href="../../cert.html#ssllabs.cert.Cert">[docs]</a><span class="k">class</span> <span class="nc">Cert</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Cert object that can be used to access the certificate of an endpoint&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__subject</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__commonNames</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;commonNames&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__altNames</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;altNames&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__notBefore</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;notBefore&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__notAfter</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;notAfter&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__issuerSubject</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;issuerSubject&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sigAlg</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sigAlg&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__issuerLabel</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;issuerLabel&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__revocationInfo</span> <span class="o">=</span> <span class="n">RevocationInfo</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;revocationInfo&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;revocationInfo&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__crlURIs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crlURIs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocspURIs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ocspURIs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__revocationStatus</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;revocationStatus&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__crlRevocationStatus</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crlRevocationStatus&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocspRevocationStatus</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ocspRevocationStatus&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sgc</span> <span class="o">=</span> <span class="n">SGC</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;sgc&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;sgc&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__validationType</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;validationType&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__issues</span> <span class="o">=</span> <span class="n">Issues</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;issues&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;issues&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sct</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sct&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__mustStaple</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mustStaple&#39;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;certificate subject&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__subject</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">commonNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;common names extracted from the subject&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__commonNames</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">altNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;alternative names&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__altNames</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notBefore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;timestamp before which the certificate is not valid&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__notBefore</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notAfter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;timestamp after which the certificate is not valid&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__notAfter</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">issuerSubject</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;issuer subject&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__issuerSubject</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sigAlg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;certificate signature algorithm&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sigAlg</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">issuerLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;issuer name&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__issuerLabel</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">revocationInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;:class:`RevocationInfo` object representing revocation information</span>
+<span class="sd">        present in the certificate&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__revocationInfo</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">crlURIs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;CRL URIs extracted from the certificate&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crlURIs</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ocspURIs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;OCSP URIs extracted from the certificate&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ocspURIs</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">revocationStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;a number that describes the revocation status of the certificate: 0</span>
+<span class="sd">        - not checked 1 - certificate revoked 2 - certificate not revoked 3 -</span>
+<span class="sd">        revocation check error 4 - no revocation information 5 - internal</span>
+<span class="sd">        error&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__revocationStatus</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">crlRevocationStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;same as revocationStatus, but only for the CRL information (if</span>
+<span class="sd">        any).&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crlRevocationStatus</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ocspRevocationStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;same as revocationStatus, but only for the OCSP information (if</span>
+<span class="sd">        any).&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ocspRevocationStatus</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sgc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Server Gated Cryptography support as an :class:`SGC` object&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sgc</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">validationType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;E for Extended Validation certificates; may be null if unable to</span>
+<span class="sd">        determine&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__validationType</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">issues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;list of certificate issues as an :class:`Issues` object&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__issues</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the certificate contains an embedded SCT; false</span>
+<span class="sd">        otherwise.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sct</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mustStaple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;a number that describes the must staple feature extension status: 0</span>
+<span class="sd">        - not supported 1 - Supported, but OCSP response is not stapled 2 -</span>
+<span class="sd">        Supported, OCSP response is stapled&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__mustStaple</span></div>
+
+<div class="viewcode-block" id="RevocationInfo"><a class="viewcode-back" href="../../cert.html#ssllabs.cert.RevocationInfo">[docs]</a><span class="k">class</span> <span class="nc">RevocationInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;revocation information present in the certificate&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__crl</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocsp</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">crl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;CRL information available&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__crl</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ocsp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;OCSP information available&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ocsp</span></div>
+
+<div class="viewcode-block" id="SGC"><a class="viewcode-back" href="../../cert.html#ssllabs.cert.SGC">[docs]</a><span class="k">class</span> <span class="nc">SGC</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Server Gated Cryptography support&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__netscape</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__microsoft</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">netscape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Netscape SGC&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netscape</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">microsoft</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Microsoft SGC&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__microsoft</span></div>
+
+<div class="viewcode-block" id="Issues"><a class="viewcode-back" href="../../cert.html#ssllabs.cert.Issues">[docs]</a><span class="k">class</span> <span class="nc">Issues</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Issues that may be present&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__nochainoftrust</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__notbefore</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__notafter</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hostnamemismatch</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">8</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__revoked</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">16</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__badcommonname</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">32</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__selfsigned</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">64</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__blacklisted</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">128</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__insecuresignature</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">256</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nochainoftrust</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;No Chain of Trust&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nochainoftrust</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notbefore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Violates Not Before constraint&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__notbefore</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">notafter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Violates Not After constraint&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__notafter</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hostnamemismatch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Hostnames mismatched&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hostnamemismatch</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">revoked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Certificate revoked&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__revoked</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">badcommonname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Bad Common Name&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__badcommonname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">selfsigned</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Self-signed certificate&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__selfsigned</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">blacklisted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Certificate blacklisted&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__blacklisted</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">insecuresignature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Insecure Signature&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__insecuresignature</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

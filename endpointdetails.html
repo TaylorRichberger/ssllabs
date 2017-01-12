@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.endpointdetails &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ssllabs.errors" href="errors.html" />
+    <link rel="prev" title="ssllabs.endpoint" href="endpoint.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="ssllabs.errors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="endpoint.html" title="ssllabs.endpoint"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ssllabs.endpointdetails">
+<span id="ssllabs-endpointdetails"></span><h1>ssllabs.endpointdetails<a class="headerlink" href="#module-ssllabs.endpointdetails" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.endpointdetails.EndpointDetails">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">EndpointDetails</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#EndpointDetails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detailed information about an endpoint</p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.cert">
+<code class="descname">cert</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate information as a <a class="reference internal" href="cert.html#ssllabs.cert.Cert" title="ssllabs.cert.Cert"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.cert.Cert</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.chaCha20Preference">
+<code class="descname">chaCha20Preference</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.chaCha20Preference" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server takes into account client preferences when
+deciding if to use ChaCha20 suites.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.chain">
+<code class="descname">chain</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>chain information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.compressionMethods">
+<code class="descname">compressionMethods</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.compressionMethods" title="Permalink to this definition">¶</a></dt>
+<dd><p>integer value that describes supported compression methods bit 0 is
+set for DEFLATE</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.dhPrimes">
+<code class="descname">dhPrimes</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.dhPrimes" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of DH primes used by the server (as raw binary bytes objects).
+Not present if the server doesn&#8217;t support the DH key exchange.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.dhUsesKnownPrimes">
+<code class="descname">dhUsesKnownPrimes</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.dhUsesKnownPrimes" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether the server uses known DH primes. Not present if the server
+doesn&#8217;t support the DH key exchange. Possible values: 0 - no 1 - yes,
+but they&#8217;re not weak 2 - yes and they&#8217;re weak</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.dhYsReuse">
+<code class="descname">dhYsReuse</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.dhYsReuse" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the DH ephemeral server value is reused. Not present if the
+server doesn&#8217;t support the DH key exchange.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.drownErrors">
+<code class="descname">drownErrors</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.drownErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if error occurred in drown test.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.drownHosts">
+<code class="descname">drownHosts</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.drownHosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of drown hosts. Experimental.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.drownVulnerable">
+<code class="descname">drownVulnerable</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.drownVulnerable" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if server vulnerable to drown attack.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.fallbackScsv">
+<code class="descname">fallbackScsv</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.fallbackScsv" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server supports TLS_FALLBACK_SCSV, false if it doesn&#8217;t.
+This field will not be available if the server&#8217;s support for
+TLS_FALLBACK_SCSV can&#8217;t be tested because it supports only one protocol
+version (e.g., only TLS 1.2).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.forwardSecrecy">
+<code class="descname">forwardSecrecy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.forwardSecrecy" title="Permalink to this definition">¶</a></dt>
+<dd><p>indicates support for Forward Secrecy bit 0 (1) - set if at least
+one browser from our simulations negotiated a Forward Secrecy suite.
+bit 1 (2) - set based on Simulator results if FS is achieved with
+modern clients. For example, the server supports ECDHE suites, but not
+DHE.  bit 2 (4) - set if all simulated clients achieve FS. In other
+words, this requires an ECDHE + DHE combination to be supported.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.freak">
+<code class="descname">freak</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.freak" title="Permalink to this definition">¶</a></dt>
+<dd><p>true of the server is vulnerable to the FREAK attack, meaning it
+supports 512-bit key exchange.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hasSct">
+<code class="descname">hasSct</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hasSct" title="Permalink to this definition">¶</a></dt>
+<dd><p>information about the availability of certificate transparency
+information (embedded SCTs): bit 0 (1) - SCT in certificate bit 1 (2) -
+SCT in the stapled OCSP response bit 2 (4) - SCT in the TLS extension
+(ServerHello)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.heartbeat">
+<code class="descname">heartbeat</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.heartbeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server supports the Heartbeat extension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.heartbleed">
+<code class="descname">heartbleed</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.heartbleed" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server is vulnerable to the Heartbleed attack.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hostStartTime">
+<code class="descname">hostStartTime</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hostStartTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>endpoint assessment starting time, in milliseconds since 1970. This
+field is useful when test results are retrieved in several HTTP
+invocations. Then, you should check that the hostStartTime value
+matches the startTime value of the host.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hpkpPolicy">
+<code class="descname">hpkpPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hpkpPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>server&#8217;s HPKP policy. Experimental.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hpkpRoPolicy">
+<code class="descname">hpkpRoPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hpkpRoPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>server&#8217;s HPKP RO (Report Only) policy. Experimental.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hstsPolicy">
+<code class="descname">hstsPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hstsPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>server&#8217;s HSTS policy. Experimental.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.hstsPreloads">
+<code class="descname">hstsPreloads</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hstsPreloads" title="Permalink to this definition">¶</a></dt>
+<dd><p>information about preloaded HSTS policies.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.httpForwarding">
+<code class="descname">httpForwarding</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.httpForwarding" title="Permalink to this definition">¶</a></dt>
+<dd><p>available on a server that responded with a redirection to some
+other hostname.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.httpStatusCode">
+<code class="descname">httpStatusCode</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.httpStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>status code of the final HTTP response seen. When submitting HTTP
+requests, redirections are followed, but only if they lead to the same
+hostname. If this field is not available, that means the HTTP request
+failed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.key">
+<code class="descname">key</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.key" title="Permalink to this definition">¶</a></dt>
+<dd><p>key information</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.logjam">
+<code class="descname">logjam</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.logjam" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server uses DH parameters weaker than 1024 bits.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.miscIntolerance">
+<code class="descname">miscIntolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.miscIntolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>indicates various other types of intolerance: bit 0 (1) - extension
+intolerance bit 1 (2) - long handshake intolerance bit 2 (4) - long
+handshake intolerance workaround success</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.nonPrefixDelegation">
+<code class="descname">nonPrefixDelegation</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.nonPrefixDelegation" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if this endpoint is reachable via a hostname without the www
+prefix</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.npnProtocols">
+<code class="descname">npnProtocols</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.npnProtocols" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of supported protocols</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.ocspStapling">
+<code class="descname">ocspStapling</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.ocspStapling" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if OCSP stapling is deployed on the server</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.openSSLLuckyMinus20">
+<code class="descname">openSSLLuckyMinus20</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.openSSLLuckyMinus20" title="Permalink to this definition">¶</a></dt>
+<dd><p>results of the CVE-2016-2107 test: -1 - test failed 0 - unknown 1 -
+not vulnerable 2 - vulnerable and insecure</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.openSslCcs">
+<code class="descname">openSslCcs</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.openSslCcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>results of the CVE-2014-0224 test: -1 - test failed 0 - unknown 1 -
+not vulnerable 2 - possibly vulnerable, but not exploitable 3 -
+vulnerable and exploitable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.poodle">
+<code class="descname">poodle</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.poodle" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the endpoint is vulnerable to POODLE; false otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.poodleTls">
+<code class="descname">poodleTls</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.poodleTls" title="Permalink to this definition">¶</a></dt>
+<dd><p>results of the POODLE TLS test: -3 - timeout -2 - TLS not supported
+-1 - test failed 0 - unknown 1 - not vulnerable 2 - vulnerable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.prefixDelegation">
+<code class="descname">prefixDelegation</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.prefixDelegation" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if this endpoint is reachable via a hostname with the www
+prefix</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.protocolIntolerance">
+<code class="descname">protocolIntolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.protocolIntolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>indicates protocol version intolerance issues: bit 0 (1) - TLS 1.0
+bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)
+- TLS 1.152 bit 5 (32) - TLS 2.152</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.protocols">
+<code class="descname">protocols</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.protocols" title="Permalink to this definition">¶</a></dt>
+<dd><p>supported protocols</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.rc4Only">
+<code class="descname">rc4Only</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.rc4Only" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if only RC4 suites are supported.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.rc4WithModern">
+<code class="descname">rc4WithModern</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.rc4WithModern" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if RC4 is used with modern clients.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.renegSupport">
+<code class="descname">renegSupport</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.renegSupport" title="Permalink to this definition">¶</a></dt>
+<dd><p>this is an integer value that describes the endpoint support for
+renegotiation: bit 0 (1) - set if insecure client-initiated
+renegotiation is supported bit 1 (2) - set if secure renegotiation is
+supported bit 2 (4) - set if secure client-initiated renegotiation is
+supported bit 3 (8) - set if the server requires secure renegotiation
+support</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.serverSignature">
+<code class="descname">serverSignature</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.serverSignature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contents of the HTTP Server response header when known. This field
+could be absent for one of two reasons: 1) the HTTP request failed
+(check httpStatusCode) or 2) there was no Server response header
+returned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.sessionResumption">
+<code class="descname">sessionResumption</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.sessionResumption" title="Permalink to this definition">¶</a></dt>
+<dd><p>this is an integer value that describes endpoint support for session
+resumption. The possible values are: 0 - session resumption is not
+enabled and we&#8217;re seeing empty session IDs 1 - endpoint returns session
+IDs, but sessions are not resumed 2 - session resumption is enabled</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.sessionTickets">
+<code class="descname">sessionTickets</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.sessionTickets" title="Permalink to this definition">¶</a></dt>
+<dd><p>indicates support for Session Tickets bit 0 (1) - set if session
+tickets are supported bit 1 (2) - set if the implementation is faulty
+[not implemented] bit 2 (4) - set if the server is intolerant to the
+extension</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.sims">
+<code class="descname">sims</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.sims" title="Permalink to this definition">¶</a></dt>
+<dd><p>instance of SimDetails.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.sniRequired">
+<code class="descname">sniRequired</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.sniRequired" title="Permalink to this definition">¶</a></dt>
+<dd><p>if SNI support is required to access the web site.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.staplingRevocationErrorMessage">
+<code class="descname">staplingRevocationErrorMessage</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.staplingRevocationErrorMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>description of the problem with the stapled OCSP response, if
+any.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.staplingRevocationStatus">
+<code class="descname">staplingRevocationStatus</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.staplingRevocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as <a class="reference internal" href="cert.html#ssllabs.cert.Cert.revocationStatus" title="ssllabs.cert.Cert.revocationStatus"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.cert.Cert.revocationStatus()</span></code></a>, but for the
+stapled OCSP response.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.suites">
+<code class="descname">suites</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.suites" title="Permalink to this definition">¶</a></dt>
+<dd><p>supported cipher suites</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.supportsNpn">
+<code class="descname">supportsNpn</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.supportsNpn" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server supports NPN</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.supportsRc4">
+<code class="descname">supportsRc4</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.supportsRc4" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the server supports at least one RC4 suite.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.EndpointDetails.vulnBeast">
+<code class="descname">vulnBeast</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.vulnBeast" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the endpoint is vulnerable to the BEAST attack</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="endpoint.html"
+                        title="previous chapter">ssllabs.endpoint</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="errors.html"
+                        title="next chapter">ssllabs.errors</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/endpointdetails.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="ssllabs.errors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="endpoint.html" title="ssllabs.endpoint"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

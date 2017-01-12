@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.endpointdetails &#8212; ssllabs 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for ssllabs.endpointdetails</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright © 2016 Taylor C. Richberger &lt;taywee@gmx.com&gt;</span>
+<span class="c1"># This code is released under the license described in the LICENSE file</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+
+<span class="kn">from</span> <span class="nn">ssllabs.cert</span> <span class="k">import</span> <span class="n">Cert</span>
+<span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
+
+<div class="viewcode-block" id="EndpointDetails"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.EndpointDetails">[docs]</a><span class="k">class</span> <span class="nc">EndpointDetails</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Detailed information about an endpoint&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hostStartTime&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__key</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cert</span> <span class="o">=</span> <span class="n">Cert</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cert&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__chain</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chain&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__protocols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;protocols&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__suites</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;suites&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__serverSignature</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;serverSignature&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__prefixDelegation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prefixDelegation&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__nonPrefixDelegation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonPrefixDelegation&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__vulnBeast</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vulnBeast&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__renegSupport</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;renegSupport&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sessionResumption</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sessionResumption&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__compressionMethods</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;compressionMethods&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__supportsNpn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supportsNpn&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__npnProtocols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;npnProtocols&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sessionTickets</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sessionTickets&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ocspStapling</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ocspStapling&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationStatus</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;staplingRevocationStatus&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationErrorMessage</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;staplingRevocationErrorMessage&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sniRequired</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sniRequired&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__httpStatusCode</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;httpStatusCode&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__httpForwarding</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;httpForwarding&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__supportsRc4</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supportsRc4&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rc4WithModern</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rc4WithModern&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__rc4Only</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rc4Only&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__forwardSecrecy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;forwardSecrecy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__protocolIntolerance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;protocolIntolerance&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__miscIntolerance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;miscIntolerance&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sims&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__heartbleed</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heartbleed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__heartbeat</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heartbeat&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__openSslCcs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;openSslCcs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__openSSLLuckyMinus20</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;openSSLLuckyMinus20&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__poodle</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;poodle&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__poodleTls</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;poodleTls&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fallbackScsv</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fallbackScsv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__freak</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;freak&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hasSct</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hasSct&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dhPrimes</span> <span class="o">=</span> <span class="p">[</span><span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">prime</span><span class="p">,</span> <span class="s1">&#39;hex_codec&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">prime</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhPrimes&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">())]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dhUsesKnownPrimes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhUsesKnownPrimes&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dhYsReuse</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhYsReuse&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logjam</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logjam&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__chaCha20Preference</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chaCha20Preference&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hstsPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPreloads</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hstsPreloads&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hpkpPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpRoPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hpkpRoPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__drownHosts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownHosts&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__drownErrors</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownErrors&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__drownVulnerable</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownVulnerable&#39;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hostStartTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;endpoint assessment starting time, in milliseconds since 1970. This</span>
+<span class="sd">        field is useful when test results are retrieved in several HTTP</span>
+<span class="sd">        invocations. Then, you should check that the hostStartTime value</span>
+<span class="sd">        matches the startTime value of the host.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;key information&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__key</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cert</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;certificate information as a :class:`ssllabs.cert.Cert`&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cert</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;chain information&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chain</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;supported protocols&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__protocols</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">suites</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;supported cipher suites&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__suites</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serverSignature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Contents of the HTTP Server response header when known. This field</span>
+<span class="sd">        could be absent for one of two reasons: 1) the HTTP request failed</span>
+<span class="sd">        (check httpStatusCode) or 2) there was no Server response header</span>
+<span class="sd">        returned.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__serverSignature</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prefixDelegation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if this endpoint is reachable via a hostname with the www</span>
+<span class="sd">        prefix&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prefixDelegation</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nonPrefixDelegation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if this endpoint is reachable via a hostname without the www</span>
+<span class="sd">        prefix&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nonPrefixDelegation</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vulnBeast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the endpoint is vulnerable to the BEAST attack&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vulnBeast</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">renegSupport</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;this is an integer value that describes the endpoint support for</span>
+<span class="sd">        renegotiation: bit 0 (1) - set if insecure client-initiated</span>
+<span class="sd">        renegotiation is supported bit 1 (2) - set if secure renegotiation is</span>
+<span class="sd">        supported bit 2 (4) - set if secure client-initiated renegotiation is</span>
+<span class="sd">        supported bit 3 (8) - set if the server requires secure renegotiation</span>
+<span class="sd">        support&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__renegSupport</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sessionResumption</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;this is an integer value that describes endpoint support for session</span>
+<span class="sd">        resumption. The possible values are: 0 - session resumption is not</span>
+<span class="sd">        enabled and we&#39;re seeing empty session IDs 1 - endpoint returns session</span>
+<span class="sd">        IDs, but sessions are not resumed 2 - session resumption is enabled&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sessionResumption</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">compressionMethods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;integer value that describes supported compression methods bit 0 is</span>
+<span class="sd">        set for DEFLATE&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compressionMethods</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">supportsNpn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server supports NPN&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__supportsNpn</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">npnProtocols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;list of supported protocols&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__npnProtocols</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sessionTickets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;indicates support for Session Tickets bit 0 (1) - set if session</span>
+<span class="sd">        tickets are supported bit 1 (2) - set if the implementation is faulty</span>
+<span class="sd">        [not implemented] bit 2 (4) - set if the server is intolerant to the</span>
+<span class="sd">        extension&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sessionTickets</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ocspStapling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if OCSP stapling is deployed on the server&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ocspStapling</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">staplingRevocationStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;same as :meth:`ssllabs.cert.Cert.revocationStatus`, but for the</span>
+<span class="sd">        stapled OCSP response.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationStatus</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">staplingRevocationErrorMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;description of the problem with the stapled OCSP response, if</span>
+<span class="sd">        any.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationErrorMessage</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sniRequired</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;if SNI support is required to access the web site.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sniRequired</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">httpStatusCode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;status code of the final HTTP response seen. When submitting HTTP</span>
+<span class="sd">        requests, redirections are followed, but only if they lead to the same</span>
+<span class="sd">        hostname. If this field is not available, that means the HTTP request</span>
+<span class="sd">        failed.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__httpStatusCode</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">httpForwarding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;available on a server that responded with a redirection to some</span>
+<span class="sd">        other hostname.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__httpForwarding</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">supportsRc4</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server supports at least one RC4 suite.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__supportsRc4</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rc4WithModern</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if RC4 is used with modern clients.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rc4WithModern</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rc4Only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if only RC4 suites are supported.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rc4Only</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">forwardSecrecy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;indicates support for Forward Secrecy bit 0 (1) - set if at least</span>
+<span class="sd">        one browser from our simulations negotiated a Forward Secrecy suite.</span>
+<span class="sd">        bit 1 (2) - set based on Simulator results if FS is achieved with</span>
+<span class="sd">        modern clients. For example, the server supports ECDHE suites, but not</span>
+<span class="sd">        DHE.  bit 2 (4) - set if all simulated clients achieve FS. In other</span>
+<span class="sd">        words, this requires an ECDHE + DHE combination to be supported.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__forwardSecrecy</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">protocolIntolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;indicates protocol version intolerance issues: bit 0 (1) - TLS 1.0</span>
+<span class="sd">        bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)</span>
+<span class="sd">        - TLS 1.152 bit 5 (32) - TLS 2.152&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__protocolIntolerance</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">miscIntolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;indicates various other types of intolerance: bit 0 (1) - extension</span>
+<span class="sd">        intolerance bit 1 (2) - long handshake intolerance bit 2 (4) - long</span>
+<span class="sd">        handshake intolerance workaround success&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__miscIntolerance</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;instance of SimDetails.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sims</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">heartbleed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server is vulnerable to the Heartbleed attack.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__heartbleed</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">heartbeat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server supports the Heartbeat extension.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__heartbeat</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">openSslCcs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;results of the CVE-2014-0224 test: -1 - test failed 0 - unknown 1 -</span>
+<span class="sd">        not vulnerable 2 - possibly vulnerable, but not exploitable 3 -</span>
+<span class="sd">        vulnerable and exploitable&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__openSslCcs</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">openSSLLuckyMinus20</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;results of the CVE-2016-2107 test: -1 - test failed 0 - unknown 1 -</span>
+<span class="sd">        not vulnerable 2 - vulnerable and insecure&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__openSSLLuckyMinus20</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">poodle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the endpoint is vulnerable to POODLE; false otherwise&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__poodle</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">poodleTls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;results of the POODLE TLS test: -3 - timeout -2 - TLS not supported</span>
+<span class="sd">        -1 - test failed 0 - unknown 1 - not vulnerable 2 - vulnerable&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__poodleTls</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fallbackScsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server supports TLS_FALLBACK_SCSV, false if it doesn&#39;t.</span>
+<span class="sd">        This field will not be available if the server&#39;s support for</span>
+<span class="sd">        TLS_FALLBACK_SCSV can&#39;t be tested because it supports only one protocol</span>
+<span class="sd">        version (e.g., only TLS 1.2).&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fallbackScsv</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">freak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true of the server is vulnerable to the FREAK attack, meaning it</span>
+<span class="sd">        supports 512-bit key exchange.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__freak</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hasSct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;information about the availability of certificate transparency</span>
+<span class="sd">        information (embedded SCTs): bit 0 (1) - SCT in certificate bit 1 (2) -</span>
+<span class="sd">        SCT in the stapled OCSP response bit 2 (4) - SCT in the TLS extension</span>
+<span class="sd">        (ServerHello)&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hasSct</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dhPrimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;list of DH primes used by the server (as raw binary bytes objects).</span>
+<span class="sd">        Not present if the server doesn&#39;t support the DH key exchange.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dhPrimes</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dhUsesKnownPrimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;whether the server uses known DH primes. Not present if the server</span>
+<span class="sd">        doesn&#39;t support the DH key exchange. Possible values: 0 - no 1 - yes,</span>
+<span class="sd">        but they&#39;re not weak 2 - yes and they&#39;re weak&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dhUsesKnownPrimes</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dhYsReuse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the DH ephemeral server value is reused. Not present if the</span>
+<span class="sd">        server doesn&#39;t support the DH key exchange.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dhYsReuse</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logjam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server uses DH parameters weaker than 1024 bits.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logjam</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">chaCha20Preference</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if the server takes into account client preferences when</span>
+<span class="sd">        deciding if to use ChaCha20 suites.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chaCha20Preference</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hstsPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HSTS policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPolicy</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hstsPreloads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;information about preloaded HSTS policies.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPreloads</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hpkpPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpPolicy</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hpkpRoPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP RO (Report Only) policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpRoPolicy</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">drownHosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;list of drown hosts. Experimental.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drownHosts</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">drownErrors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if error occurred in drown test.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drownErrors</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">drownVulnerable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;true if server vulnerable to drown attack.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drownVulnerable</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">ssllabs 0.1.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>
