@@ -9,6 +9,7 @@ import argparse
 import locale
 import six
 import sys
+from datetime import timedelta, datetime
 
 from ssllabs.__init__ import __version__
 from ssllabs.client import Client
@@ -33,6 +34,7 @@ def gradecheck():
     parser.add_argument('-g', '--grade', help='The minimum acceptable grade (default %(default)s)', type=parsegrade, default='A+')
     parser.add_argument('-T', '--ignoretrust', help='If this is set, Trust will be ignored and the trust-ignored grade will be used', action='store_true')
     parser.add_argument('-e', '--allowempty', help='If this is set, a test with 0 endpoints will be considered successful, rather than always unsuccessful', action='store_true')
+    parser.add_argument('-x', '--expiretime', help='If this is set, set a time to warn for soon expiry (must be a number in days)', type=lambda s: timedelta(int(s)))
     group = parser.add_mutually_exclusive_group()
     #group.add_argument('-v', '--verbose', help='More output', action='store_true')
     group.add_argument('-q', '--quiet', help='Less output', action='store_true')
@@ -41,6 +43,7 @@ def gradecheck():
     args = parser.parse_args()
 
     grade = None
+    expiretime = None
 
     c = Client()
     data = c.analyze(args.host)
@@ -49,8 +52,13 @@ def gradecheck():
 
     for endpoint in data['endpoints']:
         endpointgrade = getgrade(endpoint)
+        endpointexpiretime = datetime.utcfromtimestamp(endpoint['details']['cert']['notAfter'] / 1000)
         if grade is None or grade < endpointgrade:
             grade = endpointgrade
+        if expiretime is None or expiretime > endpointexpiretime:
+            expiretime = endpointexpiretime
+
+    timeleft = expiretime - datetime.utcnow()
 
     if grade is None:
         if args.allowempty:
@@ -61,10 +69,18 @@ def gradecheck():
     if not args.quiet:
         print('Needed grade of {}, got grade of {}'.format(__GRADE[args.grade], __GRADE[grade]))
 
+        if args.expiretime is not None:
+            print('Needed expire time at least {.days} days away, {.days} days left, expiring on {:%c}'.format(args.expiretime, timeleft, expiretime))
+
+    retval = 0
+
     if grade > args.grade:
-        return 1
-    else:
-        return 0
+        retval = 1
+
+    if args.expiretime is not None and timeleft <= args.expiretime:
+        retval = 1
+
+    return retval
 
 if __name__ == '__main__':
     sys.exit(gradecheck())

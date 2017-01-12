@@ -10,5 +10,5 @@ __description__ = 'A simple grade tester for qualys ssllabs, which just uses a r
 __email__ = 'tcr@absolute-performance.com'
 __license__ = 'MIT'
 __modulename__ = 'ssllabs'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __website__ = 'https://github.com/Taywee/ssllabs'

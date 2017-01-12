@@ -33,16 +33,13 @@ class Client(object):
         request.raise_for_status()
         return request.json()
 
-    def analyze(self, host, publish=False, all=None, ignoreMismatch=False):
+    def analyze(self, host, publish=False, ignoreMismatch=False):
         path = '/'.join((self.__path, 'analyze'))
 
         # Start the run
-        query = {'host': host}
+        query = {'host': host, 'all': 'done'}
         if publish:
             query['publish'] = 'on'
-
-        if all:
-            query['all'] = all
 
         if ignoreMismatch:
             query['ignoreMismatch'] = 'on'
