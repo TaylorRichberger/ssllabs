@@ -12,7 +12,8 @@ from ssllabs.cert import Cert
 from ssllabs.object import Object
 
 class EndpointDetails(Object):
-    '''Detailed information about an endpoint'''
+    '''Detailed information about an endpoint, accessed from
+    :meth:`ssllabs.endpoint.Endpoint.details`'''
 
     def __init__(self, data):
         self.__hostStartTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['hostStartTime'])

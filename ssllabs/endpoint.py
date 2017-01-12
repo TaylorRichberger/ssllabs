@@ -11,7 +11,7 @@ from ssllabs.endpointdetails import EndpointDetails
 from ssllabs.object import Object
 
 class Endpoint(Object):
-    '''Object representing a single endpoint'''
+    '''Object representing a single endpoint, accessed from :meth:`ssllabs.host.Host.endpoints`'''
     def __init__(self, data):
         self.__ipAddress = data.get('ipAddress')
         self.__serverName = data.get('serverName')

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from ssllabs.object import Object
 
 class Cert(Object):
-    '''Cert object that can be used to access the certificate of an endpoint'''
+    '''Cert object that can be used to access the certificate of an endpoint, accessed from :meth:`ssllabs.endpointdetails.EndpointDetails.cert`'''
     def __init__(self, data):
         self.__subject = data.get('subject')
         self.__commonNames = data.get('commonNames')

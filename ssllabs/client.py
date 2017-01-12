@@ -57,7 +57,7 @@ class Client(object):
         '''Calls the info API endpoint.
         
         :returns: the info data
-        :rtype: Info
+        :rtype: ssllabs.info.Info
         '''
         path = '/'.join((self.__path, 'info'))
         url = urlunsplit((self.__scheme, self.__netloc, path, '', ''))
@@ -80,7 +80,7 @@ class Client(object):
         asynchronous setups if they wish, without enforcing a specific
         framework or language version.
 
-        :raises ssllabs.errors.*: if an error was encountered with a known code
+        :raises ssllabs.errors.ResponseError: subclass if an error was encountered with a known code
         :raises requests.HTTPError: if an error was encountered that isn't a known code, the raw error is returned
         :param str host: The host to test
         :param bool publish: Whether to publish the results on the Qualys SSL Labs site
@@ -122,9 +122,9 @@ class Client(object):
     def host(self):
         '''Gets the host data.
 
-        :raises NoHostError: if a full call to analyze hasn't been completed
+        :raises ssllabs.errors.NoHostError: if a full call to analyze hasn't been completed
         :returns: The host object
-        :rtype: Host
+        :rtype: ssllabs.host.Host
         '''
 
         if self.__host is None:

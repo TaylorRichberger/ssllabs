@@ -11,6 +11,7 @@ import six
 from ssllabs.object import Object
 
 class Info(Object):
+    '''The info object, accessed through :meth:`ssllabs.client.Client.info`'''
     def __init__(self, data):
         self.__version = data.get('version')
         self.__criteriaVersion = data.get('criteriaVersion')

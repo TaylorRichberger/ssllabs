@@ -11,6 +11,10 @@ from ssllabs.endpoint import Endpoint
 from ssllabs.object import Object
 
 class Host(Object):
+    '''A host object.  The class filled by
+    :meth:`ssllabs.client.Client.analyze` and accessed through
+    :meth:`ssllabs.client.Client.host`'''
+
     def __init__(self, data):
         self.__host = data.get('host')
         self.__port = data.get('port')

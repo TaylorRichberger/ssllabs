@@ -6,6 +6,9 @@
 from __future__ import division, absolute_import, print_function, unicode_literals
 
 class Object(object):
+    '''This class mostly exists simply to allow all inheriting classes to have
+    access to the :meth:`rawdata` property'''
+
     def __new__(typ, data):
         obj = object.__new__(typ)
         obj.__rawdata = data
@@ -18,5 +21,9 @@ class Object(object):
         
         This is provided because all objects should make the raw data available
         to users who may need or want to access it without forgoing the entire
-        module'''
+        module
+        
+        :returns: The raw data structure of the object
+        :rtype: dict
+        '''
         return self.__rawdata
