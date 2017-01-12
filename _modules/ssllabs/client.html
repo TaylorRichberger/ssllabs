@@ -119,16 +119,29 @@
         <span class="sd">&#39;&#39;&#39;A generator that iteratively calls analyze on a host until it is done or errored.</span>
 <span class="sd">        </span>
 <span class="sd">        Does not return the host structure, but sets it to the object for</span>
-<span class="sd">        recalling with the host property.  When you run this, you must iterate</span>
-<span class="sd">        it to completion before trying to access the host property.  You can do</span>
-<span class="sd">        this with a loop like::</span>
+<span class="sd">        recalling with the :meth:`host` property.  When you run this, you must</span>
+<span class="sd">        iterate it to completion before trying to access the host property.</span>
+<span class="sd">        You can do this with a loop like::</span>
 
 <span class="sd">            for data in client.analyze(&quot;https://example.com&quot;):</span>
 <span class="sd">                time.sleep(10)</span>
 
 <span class="sd">        It is done this way to enable the user to construct their own</span>
 <span class="sd">        asynchronous setups if they wish, without enforcing a specific</span>
-<span class="sd">        framework or language version.</span>
+<span class="sd">        framework or language version.  For instance, a proper async coroutine</span>
+<span class="sd">        for python 3.5 could be constructed to do this something like this::</span>
+<span class="sd">            </span>
+<span class="sd">            from ssllabs.client import Client</span>
+<span class="sd">            import asyncio</span>
+
+<span class="sd">            async def analyze(hostname):</span>
+<span class="sd">                client = Client()</span>
+<span class="sd">                for data in client.analyze(hostname):</span>
+<span class="sd">                    await asyncio.sleep(10)</span>
+<span class="sd">                return client.host</span>
+
+<span class="sd">        This will let you check multiple endpoints at once, or run the analysis</span>
+<span class="sd">        while doing other work.</span>
 
 <span class="sd">        :raises ssllabs.errors.ResponseError: subclass if an error was encountered with a known code</span>
 <span class="sd">        :raises requests.HTTPError: if an error was encountered that isn&#39;t a known code, the raw error is returned</span>
