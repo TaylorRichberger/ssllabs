@@ -12,6 +12,8 @@ from time import sleep
 import sys
 from datetime import timedelta, datetime
 
+from tqdm import tqdm
+
 from ssllabs.__init__ import __version__
 from ssllabs.client import Client
 
@@ -27,6 +29,9 @@ __GRADE = (
 
 def parsegrade(string):
     return __GRADE.index(string)
+
+def average(numbers):
+    return int(float(sum(numbers)) / max(len(numbers), 1))
 
 def gradecheck():
     locale.setlocale(locale.LC_ALL, '')
@@ -54,19 +59,48 @@ def gradecheck():
             print(messagelist)
             print()
 
+    progress = None
+    endpoints = list()
+
     for data in c.analyze(args.host):
-        sleep(10)
+        if data.status == 'DNS':
+            sleep(1)
+        else:
+            if not args.quiet:
+                if progress is None:
+                    progress = [0, tqdm(desc="scanning", total=100, unit='%')]
+                    endpoints = [[0, tqdm(postfix={'ip': endpoint.ipAddress, 'name': endpoint.serverName}, total=100, unit='%')] for endpoint in data.endpoints]
+
+                for i in range(len(data.endpoints)):
+                    endpoint = data.endpoints[i]
+                    if endpoint.progress > 0:
+                        diff = endpoint.progress - endpoints[i][0]
+                        endpoints[i][0] = endpoint.progress
+                        endpoints[i][1].update(diff)
+                        endpoints[i][1].set_description(endpoint.statusDetailsMessage)
+                newaverage = average([endpoint[0] for endpoint in endpoints])
+                diff = newaverage - progress[0]
+                progress[1].update(diff)
+                progress[0] = newaverage
+            sleep(3)
+
+    if progress is not None:
+        progress[1].close()
+    for endpoint in endpoints:
+        endpoint[1].close()
+
     data = c.host
 
     getgrade = lambda endpoint: parsegrade(endpoint.gradeTrustIgnored if args.ignoretrust else endpoint.grade)
 
     for endpoint in data.endpoints:
-        endpointgrade = getgrade(endpoint)
-        endpointexpiretime = endpoint.details.cert.notAfter
-        if grade is None or grade < endpointgrade:
-            grade = endpointgrade
-        if expiretime is None or expiretime > endpointexpiretime:
-            expiretime = endpointexpiretime
+        if endpoint.grade is not None:
+            endpointgrade = getgrade(endpoint)
+            endpointexpiretime = endpoint.details.cert.notAfter
+            if grade is None or grade < endpointgrade:
+                grade = endpointgrade
+            if expiretime is None or expiretime > endpointexpiretime:
+                expiretime = endpointexpiretime
 
     timeleft = expiretime - datetime.utcnow()
 

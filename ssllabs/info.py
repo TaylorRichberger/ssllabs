@@ -17,7 +17,7 @@ class Info(Object):
         self.__criteriaVersion = data.get('criteriaVersion')
         self.__maxAssessments = data.get('maxAssessments')
         self.__currentAssessments = data.get('currentAssessments')
-        self.__newAssessmentCoolOff = timedelta(milliseconds=data['newAssessmentCoolOff'])
+        self.__newAssessmentCoolOff = timedelta(milliseconds=data['newAssessmentCoolOff']) if 'newAssessmentCoolOff' in data else None
         self.__messages = data.get('messages', list())
     @property
     def version(self):

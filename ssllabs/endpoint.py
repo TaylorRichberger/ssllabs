@@ -23,13 +23,11 @@ class Endpoint(Object):
         self.__hasWarnings = data.get('hasWarnings')
         self.__isExceptional = data.get('isExceptional')
         self.__progress = data.get('progress')
-        self.__duration = timedelta(milliseconds=data.get('duration'))
-        self.__eta = timedelta(seconds=data.get('eta'))
+        self.__duration = timedelta(milliseconds=data['duration']) if 'duration' in data else None
+        self.__eta = timedelta(seconds=data['eta']) if 'eta' in data else None
         self.__delegation = data.get('delegation')
-        if 'details' in data:
-            self.__details = EndpointDetails(data['details'])
-        else:
-            self.__details = None
+        self.__details = EndpointDetails(data['details']) if 'details' in data else None
+
     @property
     def ipAddress(self):
         '''endpoint IP address, in IPv4 or IPv6 format.'''

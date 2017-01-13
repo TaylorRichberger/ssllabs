@@ -15,8 +15,8 @@ class Cert(Object):
         self.__subject = data.get('subject')
         self.__commonNames = data.get('commonNames')
         self.__altNames = data.get('altNames')
-        self.__notBefore = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['notBefore'])
-        self.__notAfter = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['notAfter'])
+        self.__notBefore = (datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['notBefore'])) if 'notBefore' in data else None
+        self.__notAfter = (datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['notAfter'])) if 'notAfter' in data else None
         self.__issuerSubject = data.get('issuerSubject')
         self.__sigAlg = data.get('sigAlg')
         self.__issuerLabel = data.get('issuerLabel')

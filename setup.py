@@ -29,6 +29,7 @@ setup(
         'six',
         'requests',
         'enum34',
+        'tqdm',
         ],
     classifiers=[
         'Intended Audience :: Developers',

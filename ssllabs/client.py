@@ -93,6 +93,11 @@ class Client(object):
         This will let you check multiple endpoints at once, or run the analysis
         while doing other work.
 
+        The data yielded is the same form as the data put into the host
+        property, but is expected to be incomplete; in particular, there will
+        be no EndpointDetails.  You can use this data to possibly provide an
+        ETA and progress bar, however.  It is quite fancy.
+
         :raises ssllabs.errors.ResponseError: subclass if an error was encountered with a known code
         :raises requests.HTTPError: if an error was encountered that isn't a known code, the raw error is returned
         :param str host: The host to test
@@ -120,7 +125,7 @@ class Client(object):
 
             url = urlunsplit((self.__scheme, self.__netloc, path, urlencode(query), ''))
             while data['status'] in {'IN_PROGRESS', 'DNS'}:
-                yield data
+                yield Host(data)
                 request = requests.get(url)
                 request.raise_for_status()
                 data = request.json()

@@ -22,8 +22,8 @@ class Host(Object):
         self.__isPublic = data.get('isPublic')
         self.__status = data.get('status')
         self.__statusMessage = data.get('statusMessage')
-        self.__startTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['startTime'])
-        self.__testTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['testTime'])
+        self.__startTime = (datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['startTime'])) if 'startTime' in data else None
+        self.__testTime = (datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['testTime'])) if 'testTime' in data else None
         self.__engineVersion = data.get('engineVersion')
         self.__criteriaVersion = data.get('criteriaVersion')
         self.__cacheExpiryTime = data.get('cacheExpiryTime')
@@ -81,7 +81,7 @@ class Host(Object):
         return self.__cacheExpiryTime
     @property
     def endpoints(self):
-        '''list of Endpoint objects'''
+        '''list of :class:`ssllabs.endpoint.Endpoint` objects'''
         return self.__endpoints
     @property
     def certHostnames(self):
