@@ -82,15 +82,13 @@ def gradecheck():
         if args.expiretime is not None:
             print('Needed expire time at least {.days} days away, {.days} days left, expiring on {:%c}'.format(args.expiretime, timeleft, expiretime))
 
-    retval = 0
-
     if grade > args.grade:
-        retval = 1
+        return 1
 
     if args.expiretime is not None and timeleft <= args.expiretime:
-        retval = 1
+        return 1
 
-    return retval
+    return 0
 
 if __name__ == '__main__':
     sys.exit(gradecheck())
