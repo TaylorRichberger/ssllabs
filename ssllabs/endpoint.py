@@ -86,7 +86,7 @@ class Endpoint(Object):
     @property
     def delegation(self):
         '''indicates domain name delegation with and without the www prefix bit
-        as a :class`Delegation` object.'''
+        as a :class:`Delegation` object.'''
         return self.__delegation
     @property
     def details(self):
