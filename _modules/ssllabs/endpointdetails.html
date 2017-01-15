@@ -59,29 +59,39 @@
 <span class="kn">import</span> <span class="nn">codecs</span>
 
 <span class="kn">from</span> <span class="nn">ssllabs.cert</span> <span class="k">import</span> <span class="n">Cert</span>
+<span class="kn">from</span> <span class="nn">ssllabs.chain</span> <span class="k">import</span> <span class="n">Chain</span>
+<span class="kn">from</span> <span class="nn">ssllabs.drownhost</span> <span class="k">import</span> <span class="n">DrownHost</span>
+<span class="kn">from</span> <span class="nn">ssllabs.hpkppolicy</span> <span class="k">import</span> <span class="n">HpkpPolicy</span>
+<span class="kn">from</span> <span class="nn">ssllabs.hstspolicy</span> <span class="k">import</span> <span class="n">HstsPolicy</span>
+<span class="kn">from</span> <span class="nn">ssllabs.hstspreload</span> <span class="k">import</span> <span class="n">HstsPreload</span>
+<span class="kn">from</span> <span class="nn">ssllabs.key</span> <span class="k">import</span> <span class="n">Key</span>
 <span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">ssllabs.protocol</span> <span class="k">import</span> <span class="n">Protocol</span>
+<span class="kn">from</span> <span class="nn">ssllabs.simdetails</span> <span class="k">import</span> <span class="n">SimDetails</span>
+<span class="kn">from</span> <span class="nn">ssllabs.suites</span> <span class="k">import</span> <span class="n">Suites</span>
+<span class="kn">from</span> <span class="nn">ssllabs.util</span> <span class="k">import</span> <span class="n">objectornone</span>
 
 <div class="viewcode-block" id="EndpointDetails"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.EndpointDetails">[docs]</a><span class="k">class</span> <span class="nc">EndpointDetails</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Detailed information about an endpoint, accessed from</span>
 <span class="sd">    :meth:`ssllabs.endpoint.Endpoint.details`&#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hostStartTime&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__key</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__cert</span> <span class="o">=</span> <span class="n">Cert</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cert&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__chain</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chain&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__protocols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;protocols&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__suites</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;suites&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;hostStartTime&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;hostStartTime&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__key</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">Key</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cert</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">Cert</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;cert&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__chain</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">Chain</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;chain&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__protocols</span> <span class="o">=</span> <span class="p">[</span><span class="n">Protocol</span><span class="p">(</span><span class="n">protocol</span><span class="p">)</span> <span class="k">for</span> <span class="n">protocol</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;protocols&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">())]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__suites</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">Suites</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;suites&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__serverSignature</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;serverSignature&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__prefixDelegation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prefixDelegation&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__nonPrefixDelegation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nonPrefixDelegation&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__vulnBeast</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;vulnBeast&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__renegSupport</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;renegSupport&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__renegSupport</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">RenegSupport</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;renegSupport&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sessionResumption</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sessionResumption&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__compressionMethods</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;compressionMethods&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__compressionMethods</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">CompressionMethods</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;compressionMethods&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__supportsNpn</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supportsNpn&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__npnProtocols</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;npnProtocols&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sessionTickets</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sessionTickets&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sessionTickets</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">SessionTickets</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;sessionTickets&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__ocspStapling</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ocspStapling&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationStatus</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;staplingRevocationStatus&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__staplingRevocationErrorMessage</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;staplingRevocationErrorMessage&#39;</span><span class="p">)</span>
@@ -91,10 +101,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__supportsRc4</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supportsRc4&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__rc4WithModern</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rc4WithModern&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__rc4Only</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rc4Only&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__forwardSecrecy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;forwardSecrecy&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__protocolIntolerance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;protocolIntolerance&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__miscIntolerance</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;miscIntolerance&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sims</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sims&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__forwardSecrecy</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">ForwardSecrecy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;forwardSecrecy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__protocolIntolerance</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">ProtocolIntolerance</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;protocolIntolerance&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__miscIntolerance</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">MiscIntolerance</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;miscIntolerance&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sims</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">SimDetails</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;sims&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__heartbleed</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heartbleed&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__heartbeat</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heartbeat&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__openSslCcs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;openSslCcs&#39;</span><span class="p">)</span>
@@ -103,17 +113,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__poodleTls</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;poodleTls&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__fallbackScsv</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fallbackScsv&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__freak</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;freak&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hasSct</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hasSct&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hasSct</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">HasSct</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;hasSct&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dhPrimes</span> <span class="o">=</span> <span class="p">[</span><span class="n">codecs</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">prime</span><span class="p">,</span> <span class="s1">&#39;hex_codec&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">prime</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhPrimes&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">())]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dhUsesKnownPrimes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhUsesKnownPrimes&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__dhYsReuse</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;dhYsReuse&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__logjam</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logjam&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__chaCha20Preference</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;chaCha20Preference&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hstsPolicy&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPreloads</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hstsPreloads&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hpkpPolicy&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpRoPolicy</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hpkpRoPolicy&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__drownHosts</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownHosts&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPolicy</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">HstsPolicy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;hstsPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPreloads</span> <span class="o">=</span> <span class="p">[</span><span class="n">HstsPreload</span><span class="p">(</span><span class="n">preload</span><span class="p">)</span> <span class="k">for</span> <span class="n">preload</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hstsPreloads&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">())]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpPolicy</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">HpkpPolicy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;hpkpPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpRoPolicy</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">HpkpPolicy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;hpkpRoPolicy&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__drownHosts</span> <span class="o">=</span> <span class="p">[</span><span class="n">DrownHost</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownHosts&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">())]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__drownErrors</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownErrors&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__drownVulnerable</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;drownVulnerable&#39;</span><span class="p">)</span>
     <span class="nd">@property</span>
@@ -125,7 +135,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hostStartTime</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;key information&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;key information, as a :class:`ssllabs.key.Key`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__key</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cert</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -133,15 +143,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cert</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;chain information&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;chain information, as a :class:`ssllabs.chain.Chain`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chain</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">protocols</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;supported protocols&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;supported protocols, as a list of :class:`ssllabs.protocol.Protocol`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__protocols</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">suites</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;supported cipher suites&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;supported cipher suites, as a :class:`ssllabs.suites.Suites`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__suites</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">serverSignature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -166,12 +176,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vulnBeast</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">renegSupport</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;this is an integer value that describes the endpoint support for</span>
-<span class="sd">        renegotiation: bit 0 (1) - set if insecure client-initiated</span>
-<span class="sd">        renegotiation is supported bit 1 (2) - set if secure renegotiation is</span>
-<span class="sd">        supported bit 2 (4) - set if secure client-initiated renegotiation is</span>
-<span class="sd">        supported bit 3 (8) - set if the server requires secure renegotiation</span>
-<span class="sd">        support&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;this is :class:`RenegSupport` object that describes the endpoint</span>
+<span class="sd">        support for renegotiation&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__renegSupport</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sessionResumption</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -182,8 +188,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sessionResumption</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">compressionMethods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;integer value that describes supported compression methods bit 0 is</span>
-<span class="sd">        set for DEFLATE&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;integer value that describes supported compression methods, as a</span>
+<span class="sd">        :class:`CompressionMethods`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compressionMethods</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">supportsNpn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -195,10 +201,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__npnProtocols</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sessionTickets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;indicates support for Session Tickets bit 0 (1) - set if session</span>
-<span class="sd">        tickets are supported bit 1 (2) - set if the implementation is faulty</span>
-<span class="sd">        [not implemented] bit 2 (4) - set if the server is intolerant to the</span>
-<span class="sd">        extension&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;indicates support for Session Tickets, as a :class:`SessionTickets`</span>
+<span class="sd">        object&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sessionTickets</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ocspStapling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -244,24 +248,18 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__rc4Only</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">forwardSecrecy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;indicates support for Forward Secrecy bit 0 (1) - set if at least</span>
-<span class="sd">        one browser from our simulations negotiated a Forward Secrecy suite.</span>
-<span class="sd">        bit 1 (2) - set based on Simulator results if FS is achieved with</span>
-<span class="sd">        modern clients. For example, the server supports ECDHE suites, but not</span>
-<span class="sd">        DHE.  bit 2 (4) - set if all simulated clients achieve FS. In other</span>
-<span class="sd">        words, this requires an ECDHE + DHE combination to be supported.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;indicates support for Forward Secrecy, as a :class:`ForwardSecrecy`</span>
+<span class="sd">        object&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__forwardSecrecy</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">protocolIntolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;indicates protocol version intolerance issues: bit 0 (1) - TLS 1.0</span>
-<span class="sd">        bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)</span>
-<span class="sd">        - TLS 1.152 bit 5 (32) - TLS 2.152&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;indicates protocol version intolerance issues as</span>
+<span class="sd">        :class:`ProtocolIntolerance`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__protocolIntolerance</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">miscIntolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;indicates various other types of intolerance: bit 0 (1) - extension</span>
-<span class="sd">        intolerance bit 1 (2) - long handshake intolerance bit 2 (4) - long</span>
-<span class="sd">        handshake intolerance workaround success&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;indicates various other types of intolerance as</span>
+<span class="sd">        :class:`MiscIntolerance`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__miscIntolerance</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -310,9 +308,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hasSct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;information about the availability of certificate transparency</span>
-<span class="sd">        information (embedded SCTs): bit 0 (1) - SCT in certificate bit 1 (2) -</span>
-<span class="sd">        SCT in the stapled OCSP response bit 2 (4) - SCT in the TLS extension</span>
-<span class="sd">        (ServerHello)&#39;&#39;&#39;</span>
+<span class="sd">        information (embedded SCTs) as :class:`HasSct`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hasSct</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dhPrimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -341,23 +337,28 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__chaCha20Preference</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hstsPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;server&#39;s HSTS policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HSTS policy as a :class:`ssllabs.hstspolicy.HstsPolicy`.</span>
+<span class="sd">        Experimental.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPolicy</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hstsPreloads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;information about preloaded HSTS policies.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;information about preloaded HSTS policies as a list of</span>
+<span class="sd">        :class:`ssllabs.hstspreload.HstsPreload`&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hstsPreloads</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hpkpPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP policy as a :class:`ssllabs.hpkppolicy.HpkpPolicy`.</span>
+<span class="sd">        Experimental.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpPolicy</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hpkpRoPolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP RO (Report Only) policy. Experimental.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;server&#39;s HPKP RO (Report Only) policy as a</span>
+<span class="sd">        :class:`ssllabs.hpkppolicy.HpkpPolicy`. Experimental.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hpkpRoPolicy</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">drownHosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;list of drown hosts. Experimental.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;list of drown hosts as :class:`ssllabs.drownhost.DrownHost`.</span>
+<span class="sd">        Experimental.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drownHosts</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">drownErrors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -367,6 +368,176 @@
     <span class="k">def</span> <span class="nf">drownVulnerable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;true if server vulnerable to drown attack.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__drownVulnerable</span></div>
+
+<div class="viewcode-block" id="RenegSupport"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.RenegSupport">[docs]</a><span class="k">class</span> <span class="nc">RenegSupport</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;support for renegotiation, from :meth:`EndpointDetails.renegSupport`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__clientinitiated</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__secure</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__secureclientinitiated</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__serverrequiressecure</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">8</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">clientinitiated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if insecure client-initiated renegotiation is supported&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__clientinitiated</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">secure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if secure renegotiation is supported&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__secure</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">secureclientinitiated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if secure client-initiated renegotiation is supported&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__secureclientinitiated</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serverrequiressecure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if the server requires secure renegotiation support&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__serverrequiressecure</span></div>
+
+<div class="viewcode-block" id="CompressionMethods"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.CompressionMethods">[docs]</a><span class="k">class</span> <span class="nc">CompressionMethods</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;supported compression methods, from :meth:`EndpointDetails.compressionMethods`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__deflate</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">deflate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set for DEFLATE&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__deflate</span></div>
+
+<div class="viewcode-block" id="SessionTickets"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.SessionTickets">[docs]</a><span class="k">class</span> <span class="nc">SessionTickets</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;support for session tickets, from :meth:`EndpointDetails.sessionTickets`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__supported</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__faulty</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__intolerant</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">supported</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if session tickets are supported&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__supported</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">faulty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if the implementation is faulty [not implemented]&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__faulty</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">intolerant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if the server is intolerant to the extension&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__intolerant</span></div>
+
+<div class="viewcode-block" id="ForwardSecrecy"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.ForwardSecrecy">[docs]</a><span class="k">class</span> <span class="nc">ForwardSecrecy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;indicates support for Forward Secrecy, from :meth:`EndpointDetails.forwardSecrecy`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__negotiated</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__modernacheived</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__allacheived</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">negotiated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if at least one browser from our simulations negotiated a</span>
+<span class="sd">        Forward Secrecy suite&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__negotiated</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modernacheived</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set based on Simulator results if FS is achieved with modern</span>
+<span class="sd">        clients. For example, the server supports ECDHE suites, but not DHE&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__modernacheived</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">allacheived</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set if all simulated clients achieve FS. In other words, this</span>
+<span class="sd">        requires an ECDHE + DHE combination to be supported&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__allacheived</span></div>
+
+<div class="viewcode-block" id="ProtocolIntolerance"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.ProtocolIntolerance">[docs]</a><span class="k">class</span> <span class="nc">ProtocolIntolerance</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;indicates protocol version intolerance issues, from :meth:`EndpointDetails.protocolIntolerance`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_0</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_1</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_2</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_3</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">8</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_152</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">16</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_2_152</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">32</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_1_0</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 1.0&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_1_1</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 1.1&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_1_2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 1.2&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_1_3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 1.3&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_3</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_1_152</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 1.152&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_1_152</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">TLS_2_152</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;TLS 2.152&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__TLS_2_152</span></div>
+
+<div class="viewcode-block" id="MiscIntolerance"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.MiscIntolerance">[docs]</a><span class="k">class</span> <span class="nc">MiscIntolerance</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;indicates various other types of intolerance, from :meth:`EndpointDetails.miscIntolerance`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__extensionintolerance</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__longhandshakeintolerance</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__longhandshakeworkaround</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">extensionintolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;extension intolerance&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extensionintolerance</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">longhandshakeintolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;long handshake intolerance&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__longhandshakeintolerance</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">longhandshakeworkaround</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;long handshake intolerance workaround success&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__longhandshakeworkaround</span></div>
+
+<div class="viewcode-block" id="HasSct"><a class="viewcode-back" href="../../endpointdetails.html#ssllabs.endpointdetails.HasSct">[docs]</a><span class="k">class</span> <span class="nc">HasSct</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;information about the availability of certificate transparency</span>
+<span class="sd">    information (embedded SCTs), from :meth:`EndpointDetails.hasSct`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sctincertificate</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sctinstapledocsp</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sctintlsextension</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">4</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sctincertificate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;SCT in certificate&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sctincertificate</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sctinstapledocsp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;SCT in the stapled OCSP response&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sctinstapledocsp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">sctintlsextension</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;SCT in the TLS extension (ServerHello)&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sctintlsextension</span></div>
 </pre></div>
 
           </div>

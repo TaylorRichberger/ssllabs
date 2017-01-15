@@ -63,6 +63,7 @@
 <span class="kn">from</span> <span class="nn">ssllabs</span> <span class="k">import</span> <span class="n">errors</span>
 <span class="kn">from</span> <span class="nn">ssllabs.host</span> <span class="k">import</span> <span class="n">Host</span>
 <span class="kn">from</span> <span class="nn">ssllabs.info</span> <span class="k">import</span> <span class="n">Info</span>
+<span class="kn">from</span> <span class="nn">ssllabs.statuscodes</span> <span class="k">import</span> <span class="n">StatusCodes</span>
 
 <div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;The main entry point of this module, used to run analysis and get data&#39;&#39;&#39;</span>
@@ -114,6 +115,18 @@
         <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">request</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">Info</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Client.statusCodes"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client.statusCodes">[docs]</a>    <span class="k">def</span> <span class="nf">statusCodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Calls the getStatusCodes API endpoint.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: the StatusCodes data</span>
+<span class="sd">        :rtype: ssllabs.statuscodes.StatusCodes</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__path</span><span class="p">,</span> <span class="s1">&#39;getStatusCodes&#39;</span><span class="p">))</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">__scheme</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__netloc</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">StatusCodes</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Client.analyze"><a class="viewcode-back" href="../../client.html#ssllabs.client.Client.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">publish</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignoreMismatch</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;A generator that iteratively calls analyze on a host until it is done or errored.</span>

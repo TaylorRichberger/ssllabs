@@ -57,6 +57,19 @@
   <div class="section" id="module-ssllabs.endpointdetails">
 <span id="ssllabs-endpointdetails"></span><h1>ssllabs.endpointdetails<a class="headerlink" href="#module-ssllabs.endpointdetails" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
+<dt id="ssllabs.endpointdetails.CompressionMethods">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">CompressionMethods</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#CompressionMethods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.CompressionMethods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>supported compression methods, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.compressionMethods" title="ssllabs.endpointdetails.EndpointDetails.compressionMethods"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.compressionMethods()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.CompressionMethods.deflate">
+<code class="descname">deflate</code><a class="headerlink" href="#ssllabs.endpointdetails.CompressionMethods.deflate" title="Permalink to this definition">¶</a></dt>
+<dd><p>set for DEFLATE</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="ssllabs.endpointdetails.EndpointDetails">
 <em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">EndpointDetails</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#EndpointDetails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
@@ -78,14 +91,14 @@ deciding if to use ChaCha20 suites.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.chain">
 <code class="descname">chain</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.chain" title="Permalink to this definition">¶</a></dt>
-<dd><p>chain information</p>
+<dd><p>chain information, as a <code class="xref py py-class docutils literal"><span class="pre">ssllabs.chain.Chain</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.compressionMethods">
 <code class="descname">compressionMethods</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.compressionMethods" title="Permalink to this definition">¶</a></dt>
-<dd><p>integer value that describes supported compression methods bit 0 is
-set for DEFLATE</p>
+<dd><p>integer value that describes supported compression methods, as a
+<a class="reference internal" href="#ssllabs.endpointdetails.CompressionMethods" title="ssllabs.endpointdetails.CompressionMethods"><code class="xref py py-class docutils literal"><span class="pre">CompressionMethods</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -119,7 +132,8 @@ server doesn&#8217;t support the DH key exchange.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.drownHosts">
 <code class="descname">drownHosts</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.drownHosts" title="Permalink to this definition">¶</a></dt>
-<dd><p>list of drown hosts. Experimental.</p>
+<dd><p>list of drown hosts as <code class="xref py py-class docutils literal"><span class="pre">ssllabs.drownhost.DrownHost</span></code>.
+Experimental.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -140,12 +154,8 @@ version (e.g., only TLS 1.2).</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.forwardSecrecy">
 <code class="descname">forwardSecrecy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.forwardSecrecy" title="Permalink to this definition">¶</a></dt>
-<dd><p>indicates support for Forward Secrecy bit 0 (1) - set if at least
-one browser from our simulations negotiated a Forward Secrecy suite.
-bit 1 (2) - set based on Simulator results if FS is achieved with
-modern clients. For example, the server supports ECDHE suites, but not
-DHE.  bit 2 (4) - set if all simulated clients achieve FS. In other
-words, this requires an ECDHE + DHE combination to be supported.</p>
+<dd><p>indicates support for Forward Secrecy, as a <a class="reference internal" href="#ssllabs.endpointdetails.ForwardSecrecy" title="ssllabs.endpointdetails.ForwardSecrecy"><code class="xref py py-class docutils literal"><span class="pre">ForwardSecrecy</span></code></a>
+object</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -159,9 +169,7 @@ supports 512-bit key exchange.</p>
 <dt id="ssllabs.endpointdetails.EndpointDetails.hasSct">
 <code class="descname">hasSct</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hasSct" title="Permalink to this definition">¶</a></dt>
 <dd><p>information about the availability of certificate transparency
-information (embedded SCTs): bit 0 (1) - SCT in certificate bit 1 (2) -
-SCT in the stapled OCSP response bit 2 (4) - SCT in the TLS extension
-(ServerHello)</p>
+information (embedded SCTs) as <a class="reference internal" href="#ssllabs.endpointdetails.HasSct" title="ssllabs.endpointdetails.HasSct"><code class="xref py py-class docutils literal"><span class="pre">HasSct</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -188,25 +196,29 @@ matches the startTime value of the host.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.hpkpPolicy">
 <code class="descname">hpkpPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hpkpPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>server&#8217;s HPKP policy. Experimental.</p>
+<dd><p>server&#8217;s HPKP policy as a <code class="xref py py-class docutils literal"><span class="pre">ssllabs.hpkppolicy.HpkpPolicy</span></code>.
+Experimental.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.hpkpRoPolicy">
 <code class="descname">hpkpRoPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hpkpRoPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>server&#8217;s HPKP RO (Report Only) policy. Experimental.</p>
+<dd><p>server&#8217;s HPKP RO (Report Only) policy as a
+<code class="xref py py-class docutils literal"><span class="pre">ssllabs.hpkppolicy.HpkpPolicy</span></code>. Experimental.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.hstsPolicy">
 <code class="descname">hstsPolicy</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hstsPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>server&#8217;s HSTS policy. Experimental.</p>
+<dd><p>server&#8217;s HSTS policy as a <code class="xref py py-class docutils literal"><span class="pre">ssllabs.hstspolicy.HstsPolicy</span></code>.
+Experimental.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.hstsPreloads">
 <code class="descname">hstsPreloads</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.hstsPreloads" title="Permalink to this definition">¶</a></dt>
-<dd><p>information about preloaded HSTS policies.</p>
+<dd><p>information about preloaded HSTS policies as a list of
+<code class="xref py py-class docutils literal"><span class="pre">ssllabs.hstspreload.HstsPreload</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -228,7 +240,7 @@ failed.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.key">
 <code class="descname">key</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.key" title="Permalink to this definition">¶</a></dt>
-<dd><p>key information</p>
+<dd><p>key information, as a <code class="xref py py-class docutils literal"><span class="pre">ssllabs.key.Key</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -240,9 +252,8 @@ failed.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.miscIntolerance">
 <code class="descname">miscIntolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.miscIntolerance" title="Permalink to this definition">¶</a></dt>
-<dd><p>indicates various other types of intolerance: bit 0 (1) - extension
-intolerance bit 1 (2) - long handshake intolerance bit 2 (4) - long
-handshake intolerance workaround success</p>
+<dd><p>indicates various other types of intolerance as
+<a class="reference internal" href="#ssllabs.endpointdetails.MiscIntolerance" title="ssllabs.endpointdetails.MiscIntolerance"><code class="xref py py-class docutils literal"><span class="pre">MiscIntolerance</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -302,15 +313,14 @@ prefix</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.protocolIntolerance">
 <code class="descname">protocolIntolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.protocolIntolerance" title="Permalink to this definition">¶</a></dt>
-<dd><p>indicates protocol version intolerance issues: bit 0 (1) - TLS 1.0
-bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)
-- TLS 1.152 bit 5 (32) - TLS 2.152</p>
+<dd><p>indicates protocol version intolerance issues as
+<a class="reference internal" href="#ssllabs.endpointdetails.ProtocolIntolerance" title="ssllabs.endpointdetails.ProtocolIntolerance"><code class="xref py py-class docutils literal"><span class="pre">ProtocolIntolerance</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.protocols">
 <code class="descname">protocols</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.protocols" title="Permalink to this definition">¶</a></dt>
-<dd><p>supported protocols</p>
+<dd><p>supported protocols, as a list of <code class="xref py py-class docutils literal"><span class="pre">ssllabs.protocol.Protocol</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -328,12 +338,8 @@ bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.renegSupport">
 <code class="descname">renegSupport</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.renegSupport" title="Permalink to this definition">¶</a></dt>
-<dd><p>this is an integer value that describes the endpoint support for
-renegotiation: bit 0 (1) - set if insecure client-initiated
-renegotiation is supported bit 1 (2) - set if secure renegotiation is
-supported bit 2 (4) - set if secure client-initiated renegotiation is
-supported bit 3 (8) - set if the server requires secure renegotiation
-support</p>
+<dd><p>this is <a class="reference internal" href="#ssllabs.endpointdetails.RenegSupport" title="ssllabs.endpointdetails.RenegSupport"><code class="xref py py-class docutils literal"><span class="pre">RenegSupport</span></code></a> object that describes the endpoint
+support for renegotiation</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -357,10 +363,8 @@ IDs, but sessions are not resumed 2 - session resumption is enabled</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.sessionTickets">
 <code class="descname">sessionTickets</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.sessionTickets" title="Permalink to this definition">¶</a></dt>
-<dd><p>indicates support for Session Tickets bit 0 (1) - set if session
-tickets are supported bit 1 (2) - set if the implementation is faulty
-[not implemented] bit 2 (4) - set if the server is intolerant to the
-extension</p>
+<dd><p>indicates support for Session Tickets, as a <a class="reference internal" href="#ssllabs.endpointdetails.SessionTickets" title="ssllabs.endpointdetails.SessionTickets"><code class="xref py py-class docutils literal"><span class="pre">SessionTickets</span></code></a>
+object</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -392,7 +396,7 @@ stapled OCSP response.</p>
 <dl class="attribute">
 <dt id="ssllabs.endpointdetails.EndpointDetails.suites">
 <code class="descname">suites</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.suites" title="Permalink to this definition">¶</a></dt>
-<dd><p>supported cipher suites</p>
+<dd><p>supported cipher suites, as a <code class="xref py py-class docutils literal"><span class="pre">ssllabs.suites.Suites</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -411,6 +415,184 @@ stapled OCSP response.</p>
 <dt id="ssllabs.endpointdetails.EndpointDetails.vulnBeast">
 <code class="descname">vulnBeast</code><a class="headerlink" href="#ssllabs.endpointdetails.EndpointDetails.vulnBeast" title="Permalink to this definition">¶</a></dt>
 <dd><p>true if the endpoint is vulnerable to the BEAST attack</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.ForwardSecrecy">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">ForwardSecrecy</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#ForwardSecrecy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.ForwardSecrecy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>indicates support for Forward Secrecy, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.forwardSecrecy" title="ssllabs.endpointdetails.EndpointDetails.forwardSecrecy"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.forwardSecrecy()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ForwardSecrecy.allacheived">
+<code class="descname">allacheived</code><a class="headerlink" href="#ssllabs.endpointdetails.ForwardSecrecy.allacheived" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if all simulated clients achieve FS. In other words, this
+requires an ECDHE + DHE combination to be supported</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ForwardSecrecy.modernacheived">
+<code class="descname">modernacheived</code><a class="headerlink" href="#ssllabs.endpointdetails.ForwardSecrecy.modernacheived" title="Permalink to this definition">¶</a></dt>
+<dd><p>set based on Simulator results if FS is achieved with modern
+clients. For example, the server supports ECDHE suites, but not DHE</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ForwardSecrecy.negotiated">
+<code class="descname">negotiated</code><a class="headerlink" href="#ssllabs.endpointdetails.ForwardSecrecy.negotiated" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if at least one browser from our simulations negotiated a
+Forward Secrecy suite</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.HasSct">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">HasSct</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#HasSct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.HasSct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>information about the availability of certificate transparency
+information (embedded SCTs), from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.hasSct" title="ssllabs.endpointdetails.EndpointDetails.hasSct"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.hasSct()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.HasSct.sctincertificate">
+<code class="descname">sctincertificate</code><a class="headerlink" href="#ssllabs.endpointdetails.HasSct.sctincertificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>SCT in certificate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.HasSct.sctinstapledocsp">
+<code class="descname">sctinstapledocsp</code><a class="headerlink" href="#ssllabs.endpointdetails.HasSct.sctinstapledocsp" title="Permalink to this definition">¶</a></dt>
+<dd><p>SCT in the stapled OCSP response</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.HasSct.sctintlsextension">
+<code class="descname">sctintlsextension</code><a class="headerlink" href="#ssllabs.endpointdetails.HasSct.sctintlsextension" title="Permalink to this definition">¶</a></dt>
+<dd><p>SCT in the TLS extension (ServerHello)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.MiscIntolerance">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">MiscIntolerance</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#MiscIntolerance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.MiscIntolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>indicates various other types of intolerance, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.miscIntolerance" title="ssllabs.endpointdetails.EndpointDetails.miscIntolerance"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.miscIntolerance()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.MiscIntolerance.extensionintolerance">
+<code class="descname">extensionintolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.MiscIntolerance.extensionintolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>extension intolerance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.MiscIntolerance.longhandshakeintolerance">
+<code class="descname">longhandshakeintolerance</code><a class="headerlink" href="#ssllabs.endpointdetails.MiscIntolerance.longhandshakeintolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>long handshake intolerance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.MiscIntolerance.longhandshakeworkaround">
+<code class="descname">longhandshakeworkaround</code><a class="headerlink" href="#ssllabs.endpointdetails.MiscIntolerance.longhandshakeworkaround" title="Permalink to this definition">¶</a></dt>
+<dd><p>long handshake intolerance workaround success</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">ProtocolIntolerance</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#ProtocolIntolerance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>indicates protocol version intolerance issues, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.protocolIntolerance" title="ssllabs.endpointdetails.EndpointDetails.protocolIntolerance"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.protocolIntolerance()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_0">
+<code class="descname">TLS_1_0</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_0" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 1.0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_1">
+<code class="descname">TLS_1_1</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 1.1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_152">
+<code class="descname">TLS_1_152</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_152" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 1.152</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_2">
+<code class="descname">TLS_1_2</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 1.2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_3">
+<code class="descname">TLS_1_3</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_1_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 1.3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.ProtocolIntolerance.TLS_2_152">
+<code class="descname">TLS_2_152</code><a class="headerlink" href="#ssllabs.endpointdetails.ProtocolIntolerance.TLS_2_152" title="Permalink to this definition">¶</a></dt>
+<dd><p>TLS 2.152</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.RenegSupport">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">RenegSupport</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#RenegSupport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.RenegSupport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>support for renegotiation, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.renegSupport" title="ssllabs.endpointdetails.EndpointDetails.renegSupport"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.renegSupport()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.RenegSupport.clientinitiated">
+<code class="descname">clientinitiated</code><a class="headerlink" href="#ssllabs.endpointdetails.RenegSupport.clientinitiated" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if insecure client-initiated renegotiation is supported</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.RenegSupport.secure">
+<code class="descname">secure</code><a class="headerlink" href="#ssllabs.endpointdetails.RenegSupport.secure" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if secure renegotiation is supported</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.RenegSupport.secureclientinitiated">
+<code class="descname">secureclientinitiated</code><a class="headerlink" href="#ssllabs.endpointdetails.RenegSupport.secureclientinitiated" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if secure client-initiated renegotiation is supported</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.RenegSupport.serverrequiressecure">
+<code class="descname">serverrequiressecure</code><a class="headerlink" href="#ssllabs.endpointdetails.RenegSupport.serverrequiressecure" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if the server requires secure renegotiation support</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.endpointdetails.SessionTickets">
+<em class="property">class </em><code class="descclassname">ssllabs.endpointdetails.</code><code class="descname">SessionTickets</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/endpointdetails.html#SessionTickets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.endpointdetails.SessionTickets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>support for session tickets, from <a class="reference internal" href="#ssllabs.endpointdetails.EndpointDetails.sessionTickets" title="ssllabs.endpointdetails.EndpointDetails.sessionTickets"><code class="xref py py-meth docutils literal"><span class="pre">EndpointDetails.sessionTickets()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.SessionTickets.faulty">
+<code class="descname">faulty</code><a class="headerlink" href="#ssllabs.endpointdetails.SessionTickets.faulty" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if the implementation is faulty [not implemented]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.SessionTickets.intolerant">
+<code class="descname">intolerant</code><a class="headerlink" href="#ssllabs.endpointdetails.SessionTickets.intolerant" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if the server is intolerant to the extension</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.endpointdetails.SessionTickets.supported">
+<code class="descname">supported</code><a class="headerlink" href="#ssllabs.endpointdetails.SessionTickets.supported" title="Permalink to this definition">¶</a></dt>
+<dd><p>set if session tickets are supported</p>
 </dd></dl>
 
 </dd></dl>

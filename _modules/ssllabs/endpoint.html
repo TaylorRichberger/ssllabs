@@ -59,6 +59,7 @@
 
 <span class="kn">from</span> <span class="nn">ssllabs.endpointdetails</span> <span class="k">import</span> <span class="n">EndpointDetails</span>
 <span class="kn">from</span> <span class="nn">ssllabs.object</span> <span class="k">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">ssllabs.util</span> <span class="k">import</span> <span class="n">objectornone</span>
 
 <div class="viewcode-block" id="Endpoint"><a class="viewcode-back" href="../../endpoint.html#ssllabs.endpoint.Endpoint">[docs]</a><span class="k">class</span> <span class="nc">Endpoint</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Object representing a single endpoint, accessed from :meth:`ssllabs.host.Host.endpoints`&#39;&#39;&#39;</span>
@@ -75,8 +76,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__progress</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;progress&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__duration</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;duration&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__eta</span> <span class="o">=</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;eta&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;eta&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__delegation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;delegation&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__details</span> <span class="o">=</span> <span class="n">EndpointDetails</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;details&#39;</span><span class="p">])</span> <span class="k">if</span> <span class="s1">&#39;details&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__delegation</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">Delegation</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;delegation&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__details</span> <span class="o">=</span> <span class="n">objectornone</span><span class="p">(</span><span class="n">EndpointDetails</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ipAddress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -135,13 +136,29 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">delegation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;indicates domain name delegation with and without the www prefix bit</span>
-<span class="sd">        0 (1) - set for non-prefixed access bit 1 (2) - set for prefixed</span>
-<span class="sd">        access&#39;&#39;&#39;</span>
+<span class="sd">        as a :class`Delegation` object.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__delegation</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;this field contains a :class:`ssllabs.endpointdetails.EndpointDetails` object.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__details</span></div>
+
+<div class="viewcode-block" id="Delegation"><a class="viewcode-back" href="../../endpoint.html#ssllabs.endpoint.Delegation">[docs]</a><span class="k">class</span> <span class="nc">Delegation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;domain name delegation with and without the www prefix, from :meth:`Endpoint.delegation`&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__nonprefixed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__prefixed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">2</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nonprefixed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set for non-prefixed access&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__nonprefixed</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">prefixed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;set for prefixed access&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prefixed</span></div>
+
 </pre></div>
 
           </div>
