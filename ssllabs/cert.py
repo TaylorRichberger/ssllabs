@@ -8,6 +8,7 @@ from __future__ import division, absolute_import, print_function, unicode_litera
 from datetime import datetime, timedelta
 
 from ssllabs.object import Object
+from ssllabs.util import objectornone
 
 class Cert(Object):
     '''Cert object that can be used to access the certificate of an endpoint, accessed from :meth:`ssllabs.endpointdetails.EndpointDetails.cert`'''
@@ -20,15 +21,15 @@ class Cert(Object):
         self.__issuerSubject = data.get('issuerSubject')
         self.__sigAlg = data.get('sigAlg')
         self.__issuerLabel = data.get('issuerLabel')
-        self.__revocationInfo = RevocationInfo(data['revocationInfo']) if 'revocationInfo' in data else None
+        self.__revocationInfo = objectornone(RevocationInfo, data, 'revocationInfo')
         self.__crlURIs = data.get('crlURIs')
         self.__ocspURIs = data.get('ocspURIs')
         self.__revocationStatus = data.get('revocationStatus')
         self.__crlRevocationStatus = data.get('crlRevocationStatus')
         self.__ocspRevocationStatus = data.get('ocspRevocationStatus')
-        self.__sgc = SGC(data['sgc']) if 'sgc' in data else None
+        self.__sgc = objectornone(SGC, data, 'sgc')
         self.__validationType = data.get('validationType')
-        self.__issues = Issues(data['issues']) if 'issues' in data else None
+        self.__issues = objectornone(Issues, data, 'issues')
         self.__sct = data.get('sct')
         self.__mustStaple = data.get('mustStaple')
     @property
@@ -119,7 +120,7 @@ class Cert(Object):
         return self.__mustStaple
 
 class RevocationInfo(object):
-    '''revocation information present in the certificate'''
+    '''revocation information present in the certificate, from :meth:`Cert.revocationInfo`'''
     def __init__(self, data):
         self.__crl = bool(1 & data)
         self.__ocsp = bool(2 & data)
@@ -133,7 +134,7 @@ class RevocationInfo(object):
         return self.__ocsp
 
 class SGC(object):
-    '''Server Gated Cryptography support'''
+    '''Server Gated Cryptography support, from :meth:`Cert.sgc`'''
     def __init__(self, data):
         self.__netscape = bool(1 & data)
         self.__microsoft = bool(2 & data)
@@ -147,7 +148,7 @@ class SGC(object):
         return self.__microsoft
 
 class Issues(object):
-    '''Issues that may be present'''
+    '''Issues that may be present, from :meth:`Cert.issues`'''
     def __init__(self, data):
         self.__nochainoftrust = bool(1 & data)
         self.__notbefore = bool(2 & data)

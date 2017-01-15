@@ -13,6 +13,7 @@ import requests
 from ssllabs import errors
 from ssllabs.host import Host
 from ssllabs.info import Info
+from ssllabs.statuscodes import StatusCodes
 
 class Client(object):
     '''The main entry point of this module, used to run analysis and get data'''
@@ -64,6 +65,18 @@ class Client(object):
         request = requests.get(url)
         request.raise_for_status()
         return Info(request.json())
+
+    def statusCodes(self):
+        '''Calls the getStatusCodes API endpoint.
+        
+        :returns: the StatusCodes data
+        :rtype: ssllabs.statuscodes.StatusCodes
+        '''
+        path = '/'.join((self.__path, 'getStatusCodes'))
+        url = urlunsplit((self.__scheme, self.__netloc, path, '', ''))
+        request = requests.get(url)
+        request.raise_for_status()
+        return StatusCodes(request.json())
 
     def analyze(self, host, publish=False, ignoreMismatch=False):
         '''A generator that iteratively calls analyze on a host until it is done or errored.

@@ -9,29 +9,39 @@ from datetime import datetime, timedelta
 import codecs
 
 from ssllabs.cert import Cert
+from ssllabs.chain import Chain
+from ssllabs.drownhost import DrownHost
+from ssllabs.hpkppolicy import HpkpPolicy
+from ssllabs.hstspolicy import HstsPolicy
+from ssllabs.hstspreload import HstsPreload
+from ssllabs.key import Key
 from ssllabs.object import Object
+from ssllabs.protocol import Protocol
+from ssllabs.simdetails import SimDetails
+from ssllabs.suites import Suites
+from ssllabs.util import objectornone
 
 class EndpointDetails(Object):
     '''Detailed information about an endpoint, accessed from
     :meth:`ssllabs.endpoint.Endpoint.details`'''
 
     def __init__(self, data):
-        self.__hostStartTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['hostStartTime'])
-        self.__key = data.get('key')
-        self.__cert = Cert(data.get('cert'))
-        self.__chain = data.get('chain')
-        self.__protocols = data.get('protocols')
-        self.__suites = data.get('suites')
+        self.__hostStartTime = datetime.utcfromtimestamp(0) + timedelta(milliseconds=data['hostStartTime']) if 'hostStartTime' in data else None
+        self.__key = objectornone(Key, data, 'key')
+        self.__cert = objectornone(Cert, data, 'cert')
+        self.__chain = objectornone(Chain, data, 'chain')
+        self.__protocols = [Protocol(protocol) for protocol in data.get('protocols', list())]
+        self.__suites = objectornone(Suites, data, 'suites')
         self.__serverSignature = data.get('serverSignature')
         self.__prefixDelegation = data.get('prefixDelegation')
         self.__nonPrefixDelegation = data.get('nonPrefixDelegation')
         self.__vulnBeast = data.get('vulnBeast')
-        self.__renegSupport = data.get('renegSupport')
+        self.__renegSupport = objectornone(RenegSupport, data, 'renegSupport')
         self.__sessionResumption = data.get('sessionResumption')
-        self.__compressionMethods = data.get('compressionMethods')
+        self.__compressionMethods = objectornone(CompressionMethods, data, 'compressionMethods')
         self.__supportsNpn = data.get('supportsNpn')
         self.__npnProtocols = data.get('npnProtocols', '').split(' ')
-        self.__sessionTickets = data.get('sessionTickets')
+        self.__sessionTickets = objectornone(SessionTickets, data, 'sessionTickets')
         self.__ocspStapling = data.get('ocspStapling')
         self.__staplingRevocationStatus = data.get('staplingRevocationStatus')
         self.__staplingRevocationErrorMessage = data.get('staplingRevocationErrorMessage')
@@ -41,10 +51,10 @@ class EndpointDetails(Object):
         self.__supportsRc4 = data.get('supportsRc4')
         self.__rc4WithModern = data.get('rc4WithModern')
         self.__rc4Only = data.get('rc4Only')
-        self.__forwardSecrecy = data.get('forwardSecrecy')
-        self.__protocolIntolerance = data.get('protocolIntolerance')
-        self.__miscIntolerance = data.get('miscIntolerance')
-        self.__sims = data.get('sims')
+        self.__forwardSecrecy = objectornone(ForwardSecrecy, data, 'forwardSecrecy')
+        self.__protocolIntolerance = objectornone(ProtocolIntolerance, data, 'protocolIntolerance')
+        self.__miscIntolerance = objectornone(MiscIntolerance, data, 'miscIntolerance')
+        self.__sims = objectornone(SimDetails, data, 'sims')
         self.__heartbleed = data.get('heartbleed')
         self.__heartbeat = data.get('heartbeat')
         self.__openSslCcs = data.get('openSslCcs')
@@ -53,17 +63,17 @@ class EndpointDetails(Object):
         self.__poodleTls = data.get('poodleTls')
         self.__fallbackScsv = data.get('fallbackScsv')
         self.__freak = data.get('freak')
-        self.__hasSct = data.get('hasSct')
+        self.__hasSct = objectornone(HasSct, data, 'hasSct')
         self.__dhPrimes = [codecs.decode(prime, 'hex_codec') for prime in data.get('dhPrimes', list())]
         self.__dhUsesKnownPrimes = data.get('dhUsesKnownPrimes')
         self.__dhYsReuse = data.get('dhYsReuse')
         self.__logjam = data.get('logjam')
         self.__chaCha20Preference = data.get('chaCha20Preference')
-        self.__hstsPolicy = data.get('hstsPolicy')
-        self.__hstsPreloads = data.get('hstsPreloads')
-        self.__hpkpPolicy = data.get('hpkpPolicy')
-        self.__hpkpRoPolicy = data.get('hpkpRoPolicy')
-        self.__drownHosts = data.get('drownHosts')
+        self.__hstsPolicy = objectornone(HstsPolicy, data, 'hstsPolicy')
+        self.__hstsPreloads = [HstsPreload(preload) for preload in data.get('hstsPreloads', list())]
+        self.__hpkpPolicy = objectornone(HpkpPolicy, data, 'hpkpPolicy')
+        self.__hpkpRoPolicy = objectornone(HpkpPolicy, data, 'hpkpRoPolicy')
+        self.__drownHosts = [DrownHost(host) for host in data.get('drownHosts', list())]
         self.__drownErrors = data.get('drownErrors')
         self.__drownVulnerable = data.get('drownVulnerable')
     @property
@@ -75,7 +85,7 @@ class EndpointDetails(Object):
         return self.__hostStartTime
     @property
     def key(self):
-        '''key information'''
+        '''key information, as a :class:`ssllabs.key.Key`'''
         return self.__key
     @property
     def cert(self):
@@ -83,15 +93,15 @@ class EndpointDetails(Object):
         return self.__cert
     @property
     def chain(self):
-        '''chain information'''
+        '''chain information, as a :class:`ssllabs.chain.Chain`'''
         return self.__chain
     @property
     def protocols(self):
-        '''supported protocols'''
+        '''supported protocols, as a list of :class:`ssllabs.protocol.Protocol`'''
         return self.__protocols
     @property
     def suites(self):
-        '''supported cipher suites'''
+        '''supported cipher suites, as a :class:`ssllabs.suites.Suites`'''
         return self.__suites
     @property
     def serverSignature(self):
@@ -116,12 +126,8 @@ class EndpointDetails(Object):
         return self.__vulnBeast
     @property
     def renegSupport(self):
-        '''this is an integer value that describes the endpoint support for
-        renegotiation: bit 0 (1) - set if insecure client-initiated
-        renegotiation is supported bit 1 (2) - set if secure renegotiation is
-        supported bit 2 (4) - set if secure client-initiated renegotiation is
-        supported bit 3 (8) - set if the server requires secure renegotiation
-        support'''
+        '''this is :class:`RenegSupport` object that describes the endpoint
+        support for renegotiation'''
         return self.__renegSupport
     @property
     def sessionResumption(self):
@@ -132,8 +138,8 @@ class EndpointDetails(Object):
         return self.__sessionResumption
     @property
     def compressionMethods(self):
-        '''integer value that describes supported compression methods bit 0 is
-        set for DEFLATE'''
+        '''integer value that describes supported compression methods, as a
+        :class:`CompressionMethods`'''
         return self.__compressionMethods
     @property
     def supportsNpn(self):
@@ -145,10 +151,8 @@ class EndpointDetails(Object):
         return self.__npnProtocols
     @property
     def sessionTickets(self):
-        '''indicates support for Session Tickets bit 0 (1) - set if session
-        tickets are supported bit 1 (2) - set if the implementation is faulty
-        [not implemented] bit 2 (4) - set if the server is intolerant to the
-        extension'''
+        '''indicates support for Session Tickets, as a :class:`SessionTickets`
+        object'''
         return self.__sessionTickets
     @property
     def ocspStapling(self):
@@ -194,24 +198,18 @@ class EndpointDetails(Object):
         return self.__rc4Only
     @property
     def forwardSecrecy(self):
-        '''indicates support for Forward Secrecy bit 0 (1) - set if at least
-        one browser from our simulations negotiated a Forward Secrecy suite.
-        bit 1 (2) - set based on Simulator results if FS is achieved with
-        modern clients. For example, the server supports ECDHE suites, but not
-        DHE.  bit 2 (4) - set if all simulated clients achieve FS. In other
-        words, this requires an ECDHE + DHE combination to be supported.'''
+        '''indicates support for Forward Secrecy, as a :class:`ForwardSecrecy`
+        object'''
         return self.__forwardSecrecy
     @property
     def protocolIntolerance(self):
-        '''indicates protocol version intolerance issues: bit 0 (1) - TLS 1.0
-        bit 1 (2) - TLS 1.1 bit 2 (4) - TLS 1.2 bit 3 (8) - TLS 1.3 bit 4 (16)
-        - TLS 1.152 bit 5 (32) - TLS 2.152'''
+        '''indicates protocol version intolerance issues as
+        :class:`ProtocolIntolerance`'''
         return self.__protocolIntolerance
     @property
     def miscIntolerance(self):
-        '''indicates various other types of intolerance: bit 0 (1) - extension
-        intolerance bit 1 (2) - long handshake intolerance bit 2 (4) - long
-        handshake intolerance workaround success'''
+        '''indicates various other types of intolerance as
+        :class:`MiscIntolerance`'''
         return self.__miscIntolerance
     @property
     def sims(self):
@@ -260,9 +258,7 @@ class EndpointDetails(Object):
     @property
     def hasSct(self):
         '''information about the availability of certificate transparency
-        information (embedded SCTs): bit 0 (1) - SCT in certificate bit 1 (2) -
-        SCT in the stapled OCSP response bit 2 (4) - SCT in the TLS extension
-        (ServerHello)'''
+        information (embedded SCTs) as :class:`HasSct`'''
         return self.__hasSct
     @property
     def dhPrimes(self):
@@ -291,23 +287,28 @@ class EndpointDetails(Object):
         return self.__chaCha20Preference
     @property
     def hstsPolicy(self):
-        '''server's HSTS policy. Experimental.'''
+        '''server's HSTS policy as a :class:`ssllabs.hstspolicy.HstsPolicy`.
+        Experimental.'''
         return self.__hstsPolicy
     @property
     def hstsPreloads(self):
-        '''information about preloaded HSTS policies.'''
+        '''information about preloaded HSTS policies as a list of
+        :class:`ssllabs.hstspreload.HstsPreload`'''
         return self.__hstsPreloads
     @property
     def hpkpPolicy(self):
-        '''server's HPKP policy. Experimental.'''
+        '''server's HPKP policy as a :class:`ssllabs.hpkppolicy.HpkpPolicy`.
+        Experimental.'''
         return self.__hpkpPolicy
     @property
     def hpkpRoPolicy(self):
-        '''server's HPKP RO (Report Only) policy. Experimental.'''
+        '''server's HPKP RO (Report Only) policy as a
+        :class:`ssllabs.hpkppolicy.HpkpPolicy`. Experimental.'''
         return self.__hpkpRoPolicy
     @property
     def drownHosts(self):
-        '''list of drown hosts. Experimental.'''
+        '''list of drown hosts as :class:`ssllabs.drownhost.DrownHost`.
+        Experimental.'''
         return self.__drownHosts
     @property
     def drownErrors(self):
@@ -317,3 +318,173 @@ class EndpointDetails(Object):
     def drownVulnerable(self):
         '''true if server vulnerable to drown attack.'''
         return self.__drownVulnerable
+
+class RenegSupport(object):
+    '''support for renegotiation, from :meth:`EndpointDetails.renegSupport`'''
+    def __init__(self, data):
+        self.__clientinitiated = bool(1 & data)
+        self.__secure = bool(2 & data)
+        self.__secureclientinitiated = bool(4 & data)
+        self.__serverrequiressecure = bool(8 & data)
+
+    @property
+    def clientinitiated(self):
+        '''set if insecure client-initiated renegotiation is supported'''
+        return self.__clientinitiated
+
+    @property
+    def secure(self):
+        '''set if secure renegotiation is supported'''
+        return self.__secure
+
+    @property
+    def secureclientinitiated(self):
+        '''set if secure client-initiated renegotiation is supported'''
+        return self.__secureclientinitiated
+
+    @property
+    def serverrequiressecure(self):
+        '''set if the server requires secure renegotiation support'''
+        return self.__serverrequiressecure
+
+class CompressionMethods(object):
+    '''supported compression methods, from :meth:`EndpointDetails.compressionMethods`'''
+    def __init__(self, data):
+        self.__deflate = bool(1 & data)
+
+    @property
+    def deflate(self):
+        '''set for DEFLATE'''
+        return self.__deflate
+
+class SessionTickets(object):
+    '''support for session tickets, from :meth:`EndpointDetails.sessionTickets`'''
+    def __init__(self, data):
+        self.__supported = bool(1 & data)
+        self.__faulty = bool(2 & data)
+        self.__intolerant = bool(4 & data)
+
+    @property
+    def supported(self):
+        '''set if session tickets are supported'''
+        return self.__supported
+
+    @property
+    def faulty(self):
+        '''set if the implementation is faulty [not implemented]'''
+        return self.__faulty
+
+    @property
+    def intolerant(self):
+        '''set if the server is intolerant to the extension'''
+        return self.__intolerant
+
+class ForwardSecrecy(object):
+    '''indicates support for Forward Secrecy, from :meth:`EndpointDetails.forwardSecrecy`'''
+    def __init__(self, data):
+        self.__negotiated = bool(1 & data)
+        self.__modernacheived = bool(2 & data)
+        self.__allacheived = bool(4 & data)
+
+    @property
+    def negotiated(self):
+        '''set if at least one browser from our simulations negotiated a
+        Forward Secrecy suite'''
+        return self.__negotiated
+
+    @property
+    def modernacheived(self):
+        '''set based on Simulator results if FS is achieved with modern
+        clients. For example, the server supports ECDHE suites, but not DHE'''
+        return self.__modernacheived
+
+    @property
+    def allacheived(self):
+        '''set if all simulated clients achieve FS. In other words, this
+        requires an ECDHE + DHE combination to be supported'''
+        return self.__allacheived
+
+class ProtocolIntolerance(object):
+    '''indicates protocol version intolerance issues, from :meth:`EndpointDetails.protocolIntolerance`'''
+    def __init__(self, data):
+        self.__TLS_1_0 = bool(1 & data)
+        self.__TLS_1_1 = bool(2 & data)
+        self.__TLS_1_2 = bool(4 & data)
+        self.__TLS_1_3 = bool(8 & data)
+        self.__TLS_1_152 = bool(16 & data)
+        self.__TLS_2_152 = bool(32 & data)
+
+    @property
+    def TLS_1_0(self):
+        '''TLS 1.0'''
+        return self.__TLS_1_0
+
+    @property
+    def TLS_1_1(self):
+        '''TLS 1.1'''
+        return self.__TLS_1_1
+
+    @property
+    def TLS_1_2(self):
+        '''TLS 1.2'''
+        return self.__TLS_1_2
+
+    @property
+    def TLS_1_3(self):
+        '''TLS 1.3'''
+        return self.__TLS_1_3
+
+    @property
+    def TLS_1_152(self):
+        '''TLS 1.152'''
+        return self.__TLS_1_152
+
+    @property
+    def TLS_2_152(self):
+        '''TLS 2.152'''
+        return self.__TLS_2_152
+
+class MiscIntolerance(object):
+    '''indicates various other types of intolerance, from :meth:`EndpointDetails.miscIntolerance`'''
+    def __init__(self, data):
+        self.__extensionintolerance = bool(1 & data)
+        self.__longhandshakeintolerance = bool(2 & data)
+        self.__longhandshakeworkaround = bool(4 & data)
+
+    @property
+    def extensionintolerance(self):
+        '''extension intolerance'''
+        return self.__extensionintolerance
+
+    @property
+    def longhandshakeintolerance(self):
+        '''long handshake intolerance'''
+        return self.__longhandshakeintolerance
+
+    @property
+    def longhandshakeworkaround(self):
+        '''long handshake intolerance workaround success'''
+        return self.__longhandshakeworkaround
+
+class HasSct(object):
+    '''information about the availability of certificate transparency
+    information (embedded SCTs), from :meth:`EndpointDetails.hasSct`'''
+    def __init__(self, data):
+        self.__sctincertificate = bool(1 & data)
+        self.__sctinstapledocsp = bool(2 & data)
+        self.__sctintlsextension = bool(4 & data)
+
+    @property
+    def sctincertificate(self):
+        '''SCT in certificate'''
+        return self.__sctincertificate
+
+    @property
+    def sctinstapledocsp(self):
+        '''SCT in the stapled OCSP response'''
+        return self.__sctinstapledocsp
+
+    @property
+    def sctintlsextension(self):
+        '''SCT in the TLS extension (ServerHello)'''
+        return self.__sctintlsextension

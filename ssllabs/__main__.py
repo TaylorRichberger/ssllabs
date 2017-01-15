@@ -68,8 +68,8 @@ def gradecheck():
         else:
             if not args.quiet:
                 if progress is None:
-                    progress = [0, tqdm(desc="scanning", total=100, unit='%')]
-                    endpoints = [[0, tqdm(postfix={'ip': endpoint.ipAddress, 'name': endpoint.serverName}, total=100, unit='%')] for endpoint in data.endpoints]
+                    progress = [0, tqdm(desc="full scan", total=100, unit='%')]
+                    endpoints = [[0, tqdm(total=100, unit='%')] for endpoint in data.endpoints]
 
                 for i in range(len(data.endpoints)):
                     endpoint = data.endpoints[i]

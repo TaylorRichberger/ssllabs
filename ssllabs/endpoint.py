@@ -9,6 +9,7 @@ from datetime import timedelta
 
 from ssllabs.endpointdetails import EndpointDetails
 from ssllabs.object import Object
+from ssllabs.util import objectornone
 
 class Endpoint(Object):
     '''Object representing a single endpoint, accessed from :meth:`ssllabs.host.Host.endpoints`'''
@@ -25,8 +26,8 @@ class Endpoint(Object):
         self.__progress = data.get('progress')
         self.__duration = timedelta(milliseconds=data['duration']) if 'duration' in data else None
         self.__eta = timedelta(seconds=data['eta']) if 'eta' in data else None
-        self.__delegation = data.get('delegation')
-        self.__details = EndpointDetails(data['details']) if 'details' in data else None
+        self.__delegation = objectornone(Delegation, data, 'delegation')
+        self.__details = objectornone(EndpointDetails, data, 'details')
 
     @property
     def ipAddress(self):
@@ -85,10 +86,26 @@ class Endpoint(Object):
     @property
     def delegation(self):
         '''indicates domain name delegation with and without the www prefix bit
-        0 (1) - set for non-prefixed access bit 1 (2) - set for prefixed
-        access'''
+        as a :class`Delegation` object.'''
         return self.__delegation
     @property
     def details(self):
         '''this field contains a :class:`ssllabs.endpointdetails.EndpointDetails` object.'''
         return self.__details
+
+class Delegation(object):
+    '''domain name delegation with and without the www prefix, from :meth:`Endpoint.delegation`'''
+    def __init__(self, data):
+        self.__nonprefixed = bool(1 & data)
+        self.__prefixed = bool(2 & data)
+
+    @property
+    def nonprefixed(self):
+        '''set for non-prefixed access'''
+        return self.__nonprefixed
+
+    @property
+    def prefixed(self):
+        '''set for prefixed access'''
+        return self.__prefixed
+
