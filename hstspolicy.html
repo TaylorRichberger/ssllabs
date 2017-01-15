@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.hstspolicy &#8212; ssllabs 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ssllabs.hstspreload" href="hstspreload.html" />
+    <link rel="prev" title="ssllabs.hpkppolicy" href="hpkppolicy.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hstspreload.html" title="ssllabs.hstspreload"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="hpkppolicy.html" title="ssllabs.hpkppolicy"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ssllabs.hstspolicy">
+<span id="ssllabs-hstspolicy"></span><h1>ssllabs.hstspolicy<a class="headerlink" href="#module-ssllabs.hstspolicy" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.hstspolicy.HstsPolicy">
+<em class="property">class </em><code class="descclassname">ssllabs.hstspolicy.</code><code class="descname">HstsPolicy</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/hstspolicy.html#HstsPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
+<p>The HSTS Policy, accessed from
+<a class="reference internal" href="endpointdetails.html#ssllabs.endpointdetails.EndpointDetails.hstsPolicy" title="ssllabs.endpointdetails.EndpointDetails.hstsPolicy"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.endpointdetails.EndpointDetails.hstsPolicy()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.LONG_MAX_AGE">
+<code class="descname">LONG_MAX_AGE</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.LONG_MAX_AGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>this constant contains what SSL Labs considers to be
+sufficiently large max-age value</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.directives">
+<code class="descname">directives</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.directives" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of raw policy directives</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.error">
+<code class="descname">error</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>error message when error is encountered, null otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.header">
+<code class="descname">header</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>the contents of the HSTS response header, if present</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.includeSubDomains">
+<code class="descname">includeSubDomains</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.includeSubDomains" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the includeSubDomains directive is set; null
+otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.maxAge">
+<code class="descname">maxAge</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.maxAge" title="Permalink to this definition">¶</a></dt>
+<dd><p>the max-age value specified in the policy; null if policy is
+missing or invalid or on parsing error; the maximum value currently
+supported is 9223372036854775807</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.preload">
+<code class="descname">preload</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.preload" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if the preload directive is set; null otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.hstspolicy.HstsPolicy.status">
+<code class="descname">status</code><a class="headerlink" href="#ssllabs.hstspolicy.HstsPolicy.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>HSTS status:</p>
+<dl class="docutils">
+<dt>unknown</dt>
+<dd>either before the server is checked or when its HTTP response headers are not available</dd>
+<dt>absent</dt>
+<dd>header not present</dd>
+<dt>present</dt>
+<dd>header present and syntatically correct</dd>
+<dt>invalid</dt>
+<dd>header present, but couldn&#8217;t be parsed</dd>
+<dt>disabled</dt>
+<dd>header present and syntatically correct, but HSTS is disabled</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="hpkppolicy.html"
+                        title="previous chapter">ssllabs.hpkppolicy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="hstspreload.html"
+                        title="next chapter">ssllabs.hstspreload</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/hstspolicy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="hstspreload.html" title="ssllabs.hstspreload"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="hpkppolicy.html" title="ssllabs.hpkppolicy"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

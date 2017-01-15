@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ssllabs.info &#8212; ssllabs 0.1.2 documentation</title>
+    <title>ssllabs.drownhost &#8212; ssllabs 0.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ssllabs.key" href="key.html" />
-    <link rel="prev" title="ssllabs.hstspreload" href="hstspreload.html" /> 
+    <link rel="next" title="ssllabs.endpoint" href="endpoint.html" />
+    <link rel="prev" title="ssllabs.client" href="client.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="endpoint.html" title="ssllabs.endpoint"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="hstspreload.html" title="ssllabs.hstspreload"
+          <a href="client.html" title="ssllabs.client"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
@@ -54,52 +54,67 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-ssllabs.info">
-<span id="ssllabs-info"></span><h1>ssllabs.info<a class="headerlink" href="#module-ssllabs.info" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-ssllabs.drownhost">
+<span id="ssllabs-drownhost"></span><h1>ssllabs.drownhost<a class="headerlink" href="#module-ssllabs.drownhost" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="ssllabs.info.Info">
-<em class="property">class </em><code class="descclassname">ssllabs.info.</code><code class="descname">Info</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/info.html#Info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.info.Info" title="Permalink to this definition">¶</a></dt>
+<dt id="ssllabs.drownhost.DrownHost">
+<em class="property">class </em><code class="descclassname">ssllabs.drownhost.</code><code class="descname">DrownHost</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/drownhost.html#DrownHost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.drownhost.DrownHost" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
-<p>The info object, accessed through <a class="reference internal" href="client.html#ssllabs.client.Client.info" title="ssllabs.client.Client.info"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.info()</span></code></a></p>
+<p>A DROWN host, accessed from
+<a class="reference internal" href="endpointdetails.html#ssllabs.endpointdetails.EndpointDetails.drownHosts" title="ssllabs.endpointdetails.EndpointDetails.drownHosts"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.endpointdetails.EndpointDetails.drownHosts()</span></code></a></p>
 <dl class="attribute">
-<dt id="ssllabs.info.Info.criteriaVersion">
-<code class="descname">criteriaVersion</code><a class="headerlink" href="#ssllabs.info.Info.criteriaVersion" title="Permalink to this definition">¶</a></dt>
-<dd><p>rating criteria version as a string (e.g., &#8220;2009f&#8221;)</p>
+<dt id="ssllabs.drownhost.DrownHost.export">
+<code class="descname">export</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.export" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if export cipher suites detected</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="ssllabs.info.Info.currentAssessments">
-<code class="descname">currentAssessments</code><a class="headerlink" href="#ssllabs.info.Info.currentAssessments" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of ongoing assessments submitted by this client.</p>
+<dt id="ssllabs.drownhost.DrownHost.ip">
+<code class="descname">ip</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ip address of server that shares same RSA-Key/hostname in its
+certificate</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="ssllabs.info.Info.maxAssessments">
-<code class="descname">maxAssessments</code><a class="headerlink" href="#ssllabs.info.Info.maxAssessments" title="Permalink to this definition">¶</a></dt>
-<dd><p>the maximum number of concurrent assessments the client is allowed
-to initiate.</p>
+<dt id="ssllabs.drownhost.DrownHost.port">
+<code class="descname">port</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>port number of the server</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="ssllabs.info.Info.messages">
-<code class="descname">messages</code><a class="headerlink" href="#ssllabs.info.Info.messages" title="Permalink to this definition">¶</a></dt>
-<dd><p>a list of messages (strings). Messages can be public (sent to
-everyone) and private (sent only to the invoking client). Private
-messages are prefixed with &#8220;[Private]&#8221;.</p>
+<dt id="ssllabs.drownhost.DrownHost.special">
+<code class="descname">special</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.special" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if vulnerable OpenSSL version detected</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="ssllabs.info.Info.newAssessmentCoolOff">
-<code class="descname">newAssessmentCoolOff</code><a class="headerlink" href="#ssllabs.info.Info.newAssessmentCoolOff" title="Permalink to this definition">¶</a></dt>
-<dd><p>the cool-off period after each new assessment, as a timedelta;
-you&#8217;re not allowed to submit a new assessment before the cool-off
-expires, otherwise you&#8217;ll get a 429.</p>
+<dt id="ssllabs.drownhost.DrownHost.sslv2">
+<code class="descname">sslv2</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.sslv2" title="Permalink to this definition">¶</a></dt>
+<dd><p>true if SSL v2 is supported</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="ssllabs.info.Info.version">
-<code class="descname">version</code><a class="headerlink" href="#ssllabs.info.Info.version" title="Permalink to this definition">¶</a></dt>
-<dd><p>SSL Labs software version as a string (e.g., &#8220;1.11.14&#8221;)</p>
+<dt id="ssllabs.drownhost.DrownHost.status">
+<code class="descname">status</code><a class="headerlink" href="#ssllabs.drownhost.DrownHost.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>drown host status:</p>
+<dl class="docutils">
+<dt>error</dt>
+<dd>error occurred in test</dd>
+<dt>unknown</dt>
+<dd>before the status is checked</dd>
+<dt>not_checked</dt>
+<dd>not checked if already vulnerable server found</dd>
+<dt>not_checked_same_host</dt>
+<dd>Not checked (same host)</dd>
+<dt>handshake_failure</dt>
+<dd>when SSL v2 not supported by server</dd>
+<dt>sslv2</dt>
+<dd>SSL v2 supported but not same rsa key</dd>
+<dt>key_match</dt>
+<dd>vulnerable (same key with SSL v2)</dd>
+<dt>hostname_match</dt>
+<dd>vulnerable (same hostname with SSL v2)</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -113,15 +128,15 @@ expires, otherwise you&#8217;ll get a 429.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="hstspreload.html"
-                        title="previous chapter">ssllabs.hstspreload</a></p>
+  <p class="topless"><a href="client.html"
+                        title="previous chapter">ssllabs.client</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="key.html"
-                        title="next chapter">ssllabs.key</a></p>
+  <p class="topless"><a href="endpoint.html"
+                        title="next chapter">ssllabs.endpoint</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/info.rst.txt"
+      <li><a href="_sources/drownhost.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -149,10 +164,10 @@ expires, otherwise you&#8217;ll get a 429.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="endpoint.html" title="ssllabs.endpoint"
              >next</a> |</li>
         <li class="right" >
-          <a href="hstspreload.html" title="ssllabs.hstspreload"
+          <a href="client.html" title="ssllabs.client"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>

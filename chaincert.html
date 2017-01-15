@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ssllabs.chaincert &#8212; ssllabs 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ssllabs.client" href="client.html" />
+    <link rel="prev" title="ssllabs.chain" href="chain.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="chain.html" title="ssllabs.chain"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ssllabs.chaincert">
+<span id="ssllabs-chaincert"></span><h1>ssllabs.chaincert<a class="headerlink" href="#module-ssllabs.chaincert" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="ssllabs.chaincert.ChainCert">
+<em class="property">class </em><code class="descclassname">ssllabs.chaincert.</code><code class="descname">ChainCert</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/chaincert.html#ChainCert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.chaincert.ChainCert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
+<p>Cert object that can be used to access the certificate of an
+<a class="reference internal" href="chain.html#ssllabs.chain.Chain" title="ssllabs.chain.Chain"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.chain.Chain</span></code></a>, accessed from
+<a class="reference internal" href="chain.html#ssllabs.chain.Chain.certs" title="ssllabs.chain.Chain.certs"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.chain.Chain.certs()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.crlRevocationStatus">
+<code class="descname">crlRevocationStatus</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.crlRevocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as revocationStatus, but only for the CRL information (if
+any).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.issuerLabel">
+<code class="descname">issuerLabel</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.issuerLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>issuer name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.issuerSubject">
+<code class="descname">issuerSubject</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.issuerSubject" title="Permalink to this definition">¶</a></dt>
+<dd><p>issuer subject</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.issues">
+<code class="descname">issues</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of certificate issues as an <a class="reference internal" href="#ssllabs.chaincert.Issues" title="ssllabs.chaincert.Issues"><code class="xref py py-class docutils literal"><span class="pre">Issues</span></code></a> object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.keyAlg">
+<code class="descname">keyAlg</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.keyAlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate key algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.keySize">
+<code class="descname">keySize</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.keySize" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate key size in bits</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.keyStrength">
+<code class="descname">keyStrength</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.keyStrength" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate key strength, in equivalent RSA bits</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.label">
+<code class="descname">label</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate label (user-friendly name)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.notAfter">
+<code class="descname">notAfter</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.notAfter" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp after which the certificate is not valid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.notBefore">
+<code class="descname">notBefore</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.notBefore" title="Permalink to this definition">¶</a></dt>
+<dd><p>timestamp before which the certificate is not valid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.ocspRevocationStatus">
+<code class="descname">ocspRevocationStatus</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.ocspRevocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as revocationStatus, but only for the OCSP information (if
+any).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.raw">
+<code class="descname">raw</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>PEM-encoded certificate data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.revocationStatus">
+<code class="descname">revocationStatus</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.revocationStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>a number that describes the revocation status of the certificate: 0
+- not checked 1 - certificate revoked 2 - certificate not revoked 3 -
+revocation check error 4 - no revocation information 5 - internal
+error</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.sigAlg">
+<code class="descname">sigAlg</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.sigAlg" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate signature algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.ChainCert.subject">
+<code class="descname">subject</code><a class="headerlink" href="#ssllabs.chaincert.ChainCert.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate subject</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ssllabs.chaincert.Issues">
+<em class="property">class </em><code class="descclassname">ssllabs.chaincert.</code><code class="descname">Issues</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/chaincert.html#Issues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.chaincert.Issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Issues that may be present, from <a class="reference internal" href="#ssllabs.chaincert.ChainCert.issues" title="ssllabs.chaincert.ChainCert.issues"><code class="xref py py-meth docutils literal"><span class="pre">ChainCert.issues()</span></code></a></p>
+<dl class="attribute">
+<dt id="ssllabs.chaincert.Issues.blacklisted">
+<code class="descname">blacklisted</code><a class="headerlink" href="#ssllabs.chaincert.Issues.blacklisted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.Issues.expired">
+<code class="descname">expired</code><a class="headerlink" href="#ssllabs.chaincert.Issues.expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate expired</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.Issues.notyetvalid">
+<code class="descname">notyetvalid</code><a class="headerlink" href="#ssllabs.chaincert.Issues.notyetvalid" title="Permalink to this definition">¶</a></dt>
+<dd><p>certificate not yet valid</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.Issues.weakkey">
+<code class="descname">weakkey</code><a class="headerlink" href="#ssllabs.chaincert.Issues.weakkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>weak key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="ssllabs.chaincert.Issues.weaksignature">
+<code class="descname">weaksignature</code><a class="headerlink" href="#ssllabs.chaincert.Issues.weaksignature" title="Permalink to this definition">¶</a></dt>
+<dd><p>weak signature</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chain.html"
+                        title="previous chapter">ssllabs.chain</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="client.html"
+                        title="next chapter">ssllabs.client</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/chaincert.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="client.html" title="ssllabs.client"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="chain.html" title="ssllabs.chain"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Taylor C. Richberger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.1.
+    </div>
+  </body>
+</html>

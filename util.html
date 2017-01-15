@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ssllabs.object &#8212; ssllabs 0.1.2 documentation</title>
+    <title>ssllabs.util &#8212; ssllabs 0.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ssllabs.protocol" href="protocol.html" />
-    <link rel="prev" title="ssllabs.key" href="key.html" /> 
+    <link rel="prev" title="ssllabs.suites" href="suites.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -40,10 +39,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="protocol.html" title="ssllabs.protocol"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="suites.html" title="ssllabs.suites"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
@@ -54,34 +50,33 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-ssllabs.object">
-<span id="ssllabs-object"></span><h1>ssllabs.object<a class="headerlink" href="#module-ssllabs.object" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="ssllabs.object.Object">
-<em class="property">class </em><code class="descclassname">ssllabs.object.</code><code class="descname">Object</code><a class="reference internal" href="_modules/ssllabs/object.html#Object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.object.Object" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>This class mostly exists simply to allow all inheriting classes to have
-access to the <a class="reference internal" href="#ssllabs.object.Object.rawdata" title="ssllabs.object.Object.rawdata"><code class="xref py py-meth docutils literal"><span class="pre">rawdata()</span></code></a> property</p>
-<dl class="attribute">
-<dt id="ssllabs.object.Object.rawdata">
-<code class="descname">rawdata</code><a class="headerlink" href="#ssllabs.object.Object.rawdata" title="Permalink to this definition">¶</a></dt>
-<dd><p>The raw data as returned from the call and decoded, with no further
-processing done.</p>
-<p>This is provided because all objects should make the raw data available
-to users who may need or want to access it without forgoing the entire
-module</p>
+  <div class="section" id="module-ssllabs.util">
+<span id="ssllabs-util"></span><h1>ssllabs.util<a class="headerlink" href="#module-ssllabs.util" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="ssllabs.util.objectornone">
+<code class="descclassname">ssllabs.util.</code><code class="descname">objectornone</code><span class="sig-paren">(</span><em>type</em>, <em>data</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/util.html#objectornone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.util.objectornone" title="Permalink to this definition">¶</a></dt>
+<dd><p>conditionally returns type(data[key]), or None.</p>
+<p>Checks data for key, returning a type object constructed with the value if
+it exists.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The raw data structure of the object</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>type</strong> (<em>type</em>) &#8211; the type to be constructed from data[key]</li>
+<li><strong>data</strong> (<em>dict</em>) &#8211; the data to use to construct the type object</li>
+<li><strong>key</strong> (<em>str</em>) &#8211; the key to search for in data</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the type object, or None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">the type contained in type, or NoneType</p>
+</td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
 </dd></dl>
 
 </div>
@@ -93,15 +88,12 @@ module</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="key.html"
-                        title="previous chapter">ssllabs.key</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="protocol.html"
-                        title="next chapter">ssllabs.protocol</a></p>
+  <p class="topless"><a href="suites.html"
+                        title="previous chapter">ssllabs.suites</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/object.rst.txt"
+      <li><a href="_sources/util.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -129,10 +121,7 @@ module</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="protocol.html" title="ssllabs.protocol"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="suites.html" title="ssllabs.suites"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>

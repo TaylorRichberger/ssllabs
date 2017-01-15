@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ssllabs.info &#8212; ssllabs 0.1.2 documentation</title>
+    <title>ssllabs.simdetails &#8212; ssllabs 0.1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ssllabs.key" href="key.html" />
-    <link rel="prev" title="ssllabs.hstspreload" href="hstspreload.html" /> 
+    <link rel="next" title="ssllabs.simulation" href="simulation.html" />
+    <link rel="prev" title="ssllabs.simclient" href="simclient.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -40,10 +40,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="simulation.html" title="ssllabs.simulation"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="hstspreload.html" title="ssllabs.hstspreload"
+          <a href="simclient.html" title="ssllabs.simclient"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
@@ -54,52 +54,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-ssllabs.info">
-<span id="ssllabs-info"></span><h1>ssllabs.info<a class="headerlink" href="#module-ssllabs.info" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-ssllabs.simdetails">
+<span id="ssllabs-simdetails"></span><h1>ssllabs.simdetails<a class="headerlink" href="#module-ssllabs.simdetails" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="ssllabs.info.Info">
-<em class="property">class </em><code class="descclassname">ssllabs.info.</code><code class="descname">Info</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/info.html#Info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.info.Info" title="Permalink to this definition">¶</a></dt>
+<dt id="ssllabs.simdetails.SimDetails">
+<em class="property">class </em><code class="descclassname">ssllabs.simdetails.</code><code class="descname">SimDetails</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ssllabs/simdetails.html#SimDetails"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ssllabs.simdetails.SimDetails" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="object.html#ssllabs.object.Object" title="ssllabs.object.Object"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.object.Object</span></code></a></p>
-<p>The info object, accessed through <a class="reference internal" href="client.html#ssllabs.client.Client.info" title="ssllabs.client.Client.info"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.client.Client.info()</span></code></a></p>
+<p>Simulation collection, accessed from
+<a class="reference internal" href="endpointdetails.html#ssllabs.endpointdetails.EndpointDetails.sims" title="ssllabs.endpointdetails.EndpointDetails.sims"><code class="xref py py-meth docutils literal"><span class="pre">ssllabs.endpointdetails.EndpointDetails.sims()</span></code></a></p>
 <dl class="attribute">
-<dt id="ssllabs.info.Info.criteriaVersion">
-<code class="descname">criteriaVersion</code><a class="headerlink" href="#ssllabs.info.Info.criteriaVersion" title="Permalink to this definition">¶</a></dt>
-<dd><p>rating criteria version as a string (e.g., &#8220;2009f&#8221;)</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ssllabs.info.Info.currentAssessments">
-<code class="descname">currentAssessments</code><a class="headerlink" href="#ssllabs.info.Info.currentAssessments" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of ongoing assessments submitted by this client.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ssllabs.info.Info.maxAssessments">
-<code class="descname">maxAssessments</code><a class="headerlink" href="#ssllabs.info.Info.maxAssessments" title="Permalink to this definition">¶</a></dt>
-<dd><p>the maximum number of concurrent assessments the client is allowed
-to initiate.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ssllabs.info.Info.messages">
-<code class="descname">messages</code><a class="headerlink" href="#ssllabs.info.Info.messages" title="Permalink to this definition">¶</a></dt>
-<dd><p>a list of messages (strings). Messages can be public (sent to
-everyone) and private (sent only to the invoking client). Private
-messages are prefixed with &#8220;[Private]&#8221;.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ssllabs.info.Info.newAssessmentCoolOff">
-<code class="descname">newAssessmentCoolOff</code><a class="headerlink" href="#ssllabs.info.Info.newAssessmentCoolOff" title="Permalink to this definition">¶</a></dt>
-<dd><p>the cool-off period after each new assessment, as a timedelta;
-you&#8217;re not allowed to submit a new assessment before the cool-off
-expires, otherwise you&#8217;ll get a 429.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="ssllabs.info.Info.version">
-<code class="descname">version</code><a class="headerlink" href="#ssllabs.info.Info.version" title="Permalink to this definition">¶</a></dt>
-<dd><p>SSL Labs software version as a string (e.g., &#8220;1.11.14&#8221;)</p>
+<dt id="ssllabs.simdetails.SimDetails.results">
+<code class="descname">results</code><a class="headerlink" href="#ssllabs.simdetails.SimDetails.results" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list of <a class="reference internal" href="simulation.html#ssllabs.simulation.Simulation" title="ssllabs.simulation.Simulation"><code class="xref py py-class docutils literal"><span class="pre">ssllabs.simulation.Simulation</span></code></a> objects</p>
 </dd></dl>
 
 </dd></dl>
@@ -113,15 +79,15 @@ expires, otherwise you&#8217;ll get a 429.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="hstspreload.html"
-                        title="previous chapter">ssllabs.hstspreload</a></p>
+  <p class="topless"><a href="simclient.html"
+                        title="previous chapter">ssllabs.simclient</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="key.html"
-                        title="next chapter">ssllabs.key</a></p>
+  <p class="topless"><a href="simulation.html"
+                        title="next chapter">ssllabs.simulation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/info.rst.txt"
+      <li><a href="_sources/simdetails.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -149,10 +115,10 @@ expires, otherwise you&#8217;ll get a 429.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="key.html" title="ssllabs.key"
+          <a href="simulation.html" title="ssllabs.simulation"
              >next</a> |</li>
         <li class="right" >
-          <a href="hstspreload.html" title="ssllabs.hstspreload"
+          <a href="simclient.html" title="ssllabs.simclient"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">ssllabs 0.1.2 documentation</a> &#187;</li> 
       </ul>
